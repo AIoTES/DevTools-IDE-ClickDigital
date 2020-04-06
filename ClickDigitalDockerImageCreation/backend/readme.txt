@@ -1,0 +1,1 @@
+für docker die basic auth filter auskommentieren und die corsfilter filter if abfrage auskommentieren

@@ -1,0 +1,14 @@
+version: '3'
+services:    
+
+
+  frontend:
+    image: docker-activage.satrd.es/clickdigital-frontend:integrated_6
+    build: ./frontend
+    container_name: clickdigital-frontend
+    environment:
+      - KEYCLOAK_URL=https://aiotes.igd.fraunhofer.de:8081/auth
+      - KEYCLOAK_REALM=activage
+      - KEYCLOAK_CLIENT=tools-user-login
+    ports:
+      - "80:80"
