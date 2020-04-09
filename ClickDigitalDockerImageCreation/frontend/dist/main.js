@@ -3825,7 +3825,7 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-var BACKENDURL = "" + _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].httpMode + _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].backendIP + ":" + _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].backendPort + "/ClickDigitalBackend_war_exploded";
+var BACKENDURL = "" + _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].httpMode + _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].baseUrl + _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].contextRoot;
 var AUTH = 'Bearer '.concat(localStorage.getItem('ang-token'));
 var URL_ACP_MANAGER = BACKENDURL + "/acp/";
 var USER = URL_ACP_MANAGER + 'user/';
@@ -4028,7 +4028,7 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-var BACKENDURL = "" + _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].httpMode + _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].backendIP + ":" + _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].backendPort + "/ClickDigitalBackend_war_exploded";
+var BACKENDURL = "" + _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].httpMode + _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].baseUrl + _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].contextRoot;
 var AUTH = 'Bearer '.concat(localStorage.getItem('ang-token'));
 var URLANOMALYMANAGER = BACKENDURL + "/anomalyManager/";
 var nowData = '/getSensorWithAnomalyScoreDataNow?deviceId=';
@@ -4238,7 +4238,7 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-var BACKENDURL = "" + _environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].httpMode + _environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].backendIP + ":" + _environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].backendPort + "/ClickDigitalBackend_war_exploded";
+var BACKENDURL = "" + _environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].httpMode + _environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].baseUrl + _environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].contextRoot;
 var AUTH = 'Bearer '.concat(localStorage.getItem('ang-token'));
 var newLink = BACKENDURL + "/database/";
 var find = '_find';
@@ -4335,7 +4335,7 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-var BACKENDURL = "" + _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].httpMode + _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].backendIP + ":" + _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].backendPort + "/ClickDigitalBackend_war_exploded";
+var BACKENDURL = "" + _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].httpMode + _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].baseUrl + _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].contextRoot;
 var AUTH = 'Bearer '.concat(localStorage.getItem('ang-token'));
 var URLPRIVACYMANAGER = BACKENDURL + "/dataprivacy/";
 var editSettings = '/edit';
@@ -4416,7 +4416,7 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-var BACKENDURL = "" + _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].httpMode + _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].backendIP + ":" + _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].backendPort + "/ClickDigitalBackend_war_exploded";
+var BACKENDURL = "" + _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].httpMode + _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].baseUrl + _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].contextRoot;
 // const AUTH = `${environment.Authorization}`;
 var AUTH = 'Bearer '.concat(localStorage.getItem('ang-token'));
 var URLDEVICEMANAGER = BACKENDURL + "/devicemanager/";
@@ -5180,7 +5180,7 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-var BACKENDURL = "" + _environments_environment__WEBPACK_IMPORTED_MODULE_7__["environment"].httpMode + _environments_environment__WEBPACK_IMPORTED_MODULE_7__["environment"].backendIP + ":" + _environments_environment__WEBPACK_IMPORTED_MODULE_7__["environment"].backendPort + "/ClickDigitalBackend_war_exploded";
+var BACKENDURL = "" + _environments_environment__WEBPACK_IMPORTED_MODULE_7__["environment"].httpMode + _environments_environment__WEBPACK_IMPORTED_MODULE_7__["environment"].baseUrl + _environments_environment__WEBPACK_IMPORTED_MODULE_7__["environment"].contextRoot;
 var AUTH = 'Bearer '.concat(localStorage.getItem('ang-token'));
 // Strings for dynamic URL generating
 var URLRULEMANAGER = BACKENDURL + "/ruleManagement/";
@@ -5464,7 +5464,7 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-var BACKENDURL = "" + _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].httpMode + _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].backendIP + ":" + _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].backendPort + "/ClickDigitalBackend_war_exploded";
+var BACKENDURL = "" + _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].httpMode + _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].baseUrl + _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].contextRoot;
 var AUTH = 'Bearer '.concat(localStorage.getItem('ang-token'));
 var URLUSERSESSIONMANAGER = BACKENDURL + "/session/";
 var restore = 'restore';
@@ -5518,7 +5518,7 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-var BACKENDURL = "" + _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].httpMode + _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].backendIP + ":" + _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].backendPort + "/ClickDigitalBackend_war_exploded";
+var BACKENDURL = "" + _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].httpMode + _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].baseUrl + _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].contextRoot;
 var AUTH = 'Bearer '.concat(localStorage.getItem('ang-token'));
 var URLUSERMANAGER = BACKENDURL + "/user/";
 var create = 'create';
@@ -5641,7 +5641,7 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-var BACKENDURL = "" + _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].httpMode + _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].backendIP + ":" + _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].backendPort + "/ClickDigitalBackend_war_exploded";
+var BACKENDURL = "" + _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].httpMode + _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].baseUrl + _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].contextRoot;
 var AUTH = 'Bearer '.concat(localStorage.getItem('ang-token'));
 var URLVISUALMANAGER = BACKENDURL + "/visualManager/";
 var nowData = '/getSensorDataNow?deviceId=';
@@ -10323,7 +10323,7 @@ var SheetContentComponent = /** @class */ (function () {
     };
     SheetContentComponent.prototype.connectToEntityStateSocket = function () {
         var _this = this;
-        var connection = new WebSocket("" + _environments_environment__WEBPACK_IMPORTED_MODULE_10__["environment"].websocketProtocol + _environments_environment__WEBPACK_IMPORTED_MODULE_10__["environment"].backendIP + ":" + _environments_environment__WEBPACK_IMPORTED_MODULE_10__["environment"].backendPort + "/ClickDigitalBackend_war_exploded/" + this.user.id + "/" + this.project.id + "/webSocket/entitystatechanged");
+        var connection = new WebSocket("" + _environments_environment__WEBPACK_IMPORTED_MODULE_10__["environment"].websocketProtocol + _environments_environment__WEBPACK_IMPORTED_MODULE_10__["environment"].baseUrl + _environments_environment__WEBPACK_IMPORTED_MODULE_10__["environment"].contextRoot + "/" + this.user.id + "/" + this.project.id + "/webSocket/entitystatechanged");
         // When the connection is open, send some data to the server
         connection.onopen = function () {
             console.log('Opened websocket connection with topic: entitystatechanged');
@@ -10367,7 +10367,7 @@ var SheetContentComponent = /** @class */ (function () {
     };
     SheetContentComponent.prototype.connectToDeviceStatesSocket = function () {
         var _this = this;
-        var connection = new WebSocket("" + _environments_environment__WEBPACK_IMPORTED_MODULE_10__["environment"].websocketProtocol + _environments_environment__WEBPACK_IMPORTED_MODULE_10__["environment"].backendIP + ":" + _environments_environment__WEBPACK_IMPORTED_MODULE_10__["environment"].backendPort + "/ClickDigitalBackend_war_exploded/" + this.user.id + "/" + this.project.id + "/webSocket/devicestatuschanged");
+        var connection = new WebSocket("" + _environments_environment__WEBPACK_IMPORTED_MODULE_10__["environment"].websocketProtocol + _environments_environment__WEBPACK_IMPORTED_MODULE_10__["environment"].baseUrl + _environments_environment__WEBPACK_IMPORTED_MODULE_10__["environment"].contextRoot + "/" + this.user.id + "/" + this.project.id + "/webSocket/devicestatuschanged");
         // When the connection is open, send some data to the server
         connection.onopen = function () {
             console.log('Opened websocket connection with topic: devicestatuschanged');
@@ -10407,7 +10407,7 @@ var SheetContentComponent = /** @class */ (function () {
     };
     SheetContentComponent.prototype.connectNotificationToSocket = function () {
         var _this = this;
-        var connectionNotification = new WebSocket("" + _environments_environment__WEBPACK_IMPORTED_MODULE_10__["environment"].websocketProtocol + _environments_environment__WEBPACK_IMPORTED_MODULE_10__["environment"].backendIP + ":" + _environments_environment__WEBPACK_IMPORTED_MODULE_10__["environment"].backendPort + "/ClickDigitalBackend_war_exploded/" + this.user.id + "/" + this.project.id + "/webSocket/rulestatuschanged");
+        var connectionNotification = new WebSocket("" + _environments_environment__WEBPACK_IMPORTED_MODULE_10__["environment"].websocketProtocol + _environments_environment__WEBPACK_IMPORTED_MODULE_10__["environment"].baseUrl + _environments_environment__WEBPACK_IMPORTED_MODULE_10__["environment"].contextRoot + "/" + this.user.id + "/" + this.project.id + "/webSocket/rulestatuschanged");
         connectionNotification.onopen = function () {
             console.log('Opened websocket connection with topic: rulestatuschanged');
         };
@@ -21325,10 +21325,11 @@ __webpack_require__.r(__webpack_exports__);
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 var environment = {
     production: false,
-    backendPort: 9999,
-    backendIP: 'localhost',
     websocketProtocol: 'ws://',
     httpMode: 'http://',
+    // environment variables set in assets/env.js
+    baseUrl: window['env']['baseUrl'],
+    contextRoot: window['env']['contextRoot'],
     // keycloak configuration
     keycloakUrl: window['env']['keycloakUrl'],
     keycloakRealm: window['env']['keycloakRealm'],

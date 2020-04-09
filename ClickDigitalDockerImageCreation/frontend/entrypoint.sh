@@ -1,9 +1,13 @@
 #!/bin/bash
 
+echo BASE_URL=$BASE_URL;
+echo CONTEXT_URL=$CONTEXT_URL;
 echo KEYCLOAK_URL=$KEYCLOAK_URL;
 echo KEYCLOAK_REALM=$KEYCLOAK_REALM;
 echo KEYCLOAK_CLIENT=$KEYCLOAK_CLIENT;
 
+sed -i "s|BASE_URL|$BASE_URL|g" /usr/local/apache2/htdocs/assets/env.js
+sed -i "s|CONTEXT_URL|$CONTEXT_URL|g" /usr/local/apache2/htdocs/assets/env.js
 sed -i "s|KEYCLOAK_URL|$KEYCLOAK_URL|g" /usr/local/apache2/htdocs/assets/env.js
 sed -i "s|KEYCLOAK_REALM|$KEYCLOAK_REALM|g" /usr/local/apache2/htdocs/assets/env.js
 sed -i "s|KEYCLOAK_CLIENT|$KEYCLOAK_CLIENT|g" /usr/local/apache2/htdocs/assets/env.js
