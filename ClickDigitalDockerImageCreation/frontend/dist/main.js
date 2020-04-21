@@ -328,7 +328,7 @@ module.exports = "<div class=\"containerACPArea\">\r\n\t<div style=\"padding-top
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".containerACPArea {\n  width: 100%;\n  height: 100%;\n  background-image: url(\"/assets/img/bckacp.jpg\");\n  background-size: cover; }\n\n.acp-card {\n  align-content: center;\n  position: absolute;\n  width: auto;\n  height: auto;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  margin-top: 40px;\n  margin-bottom: 40px;\n  margin-left: 10%;\n  margin-right: 10%;\n  background: rgba(255, 255, 255, 0.6);\n  border: 0.5px;\n  border-style: solid;\n  border-color: rgba(255, 255, 255, 0.3);\n  padding: 0px; }\n\n.ui-panelmenu {\n  height: 100% !important; }\n\n.acp-card .panelMenu {\n  float: left;\n  border: 1px solid gray;\n  height: 100%;\n  background: rgba(0, 0, 0, 0.6);\n  text-align: center; }\n\n.acp-card .acpContent {\n  float: left;\n  padding-left: 15px;\n  height: 100%;\n  display: inline-block; }\n\n.ui-menuitem-text {\n  color: black !important; }\n\n.ui-menuitem-icon {\n  color: black !important; }\n"
+module.exports = ".containerACPArea {\n  width: 100%;\n  height: 100%;\n  background-image: url(\"/development/clickdigital/assets/img/bckacp.jpg\");\n  background-size: cover; }\n\n.acp-card {\n  align-content: center;\n  position: absolute;\n  width: auto;\n  height: auto;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  margin-top: 40px;\n  margin-bottom: 40px;\n  margin-left: 10%;\n  margin-right: 10%;\n  background: rgba(255, 255, 255, 0.6);\n  border: 0.5px;\n  border-style: solid;\n  border-color: rgba(255, 255, 255, 0.3);\n  padding: 0px; }\n\n.ui-panelmenu {\n  height: 100% !important; }\n\n.acp-card .panelMenu {\n  float: left;\n  border: 1px solid gray;\n  height: 100%;\n  background: rgba(0, 0, 0, 0.6);\n  text-align: center; }\n\n.acp-card .acpContent {\n  float: left;\n  padding-left: 15px;\n  height: 100%;\n  display: inline-block; }\n\n.ui-menuitem-text {\n  color: black !important; }\n\n.ui-menuitem-icon {\n  color: black !important; }\n"
 
 /***/ }),
 
@@ -20054,7 +20054,7 @@ module.exports = "\r\n<div style=\"text-align: center\" class=\"ui-grid-row\">\r
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".containerHomePage {\n  width: 100%;\n  height: 100%;\n  background-image: url(\"/../bcklogin.jpg\");\n  background-size: cover; }\n\n.home-card {\n  align-content: center;\n  width: auto;\n  height: auto;\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  margin: 40px;\n  background: rgba(96, 191, 161, 0.6);\n  border: 0.5px;\n  border-style: solid;\n  border-color: rgba(255, 255, 255, 0.3);\n  padding: 15px; }\n\n.ui-tabmenu {\n  background-color: rgba(0, 0, 0, 0.25); }\n\n.ui-tabmenu .ui-tabmenu-nav {\n  display: flex;\n  justify-content: center;\n  border-bottom: 0px !important;\n  border-radius: 5px !important; }\n\n.ui-tabmenuitem {\n  background: #14B404 !important;\n  border-color: green !important; }\n\n.ui-tabmenuitem.ui-state-active {\n  background: #01DF21 !important;\n  border-color: #088A08 !important; }\n\n.ui-menuitem-text {\n  color: #FFFFFF !important; }\n\n.ui-menuitem-icon {\n  color: #FAFAFA !important; }\n"
+module.exports = ".containerHomePage {\n  width: 100%;\n  height: 100%;\n  background-image: url('bcklogin.jpg');\n  background-size: cover; }\n\n.home-card {\n  align-content: center;\n  width: auto;\n  height: auto;\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  margin: 40px;\n  background: rgba(96, 191, 161, 0.6);\n  border: 0.5px;\n  border-style: solid;\n  border-color: rgba(255, 255, 255, 0.3);\n  padding: 15px; }\n\n.ui-tabmenu {\n  background-color: rgba(0, 0, 0, 0.25); }\n\n.ui-tabmenu .ui-tabmenu-nav {\n  display: flex;\n  justify-content: center;\n  border-bottom: 0px !important;\n  border-radius: 5px !important; }\n\n.ui-tabmenuitem {\n  background: #14B404 !important;\n  border-color: green !important; }\n\n.ui-tabmenuitem.ui-state-active {\n  background: #01DF21 !important;\n  border-color: #088A08 !important; }\n\n.ui-menuitem-text {\n  color: #FFFFFF !important; }\n\n.ui-menuitem-icon {\n  color: #FAFAFA !important; }\n"
 
 /***/ }),
 
@@ -20580,7 +20580,7 @@ var ForgotPasswordComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p-growl [value]=\"homeMsgs\" [sticky]=\"true\"></p-growl>\r\n<cookie-law learnMore=\"/#privacyPolicy\" position=\"top\"></cookie-law>\r\n\r\n<div class=\"containerHomePage\">\r\n\t<div id=\"logincard\" class=\"home-card ui-grid ui-grid-responsive\">\r\n    <h1 style=\"text-align: center;\">Welcome to</h1>\r\n\t\t<a href=\"\">\r\n\t\t\t<img style=\"text-align: center; padding-bottom: 25px; width: 35%; margin: auto\" class=\"ui-grid-row\" src=\"../../../assets/img/clickdigitallogo_white.svg\">\r\n\t\t</a>\r\n    <p-tabMenu id=\"tabMenu\" #tabMenu></p-tabMenu>\r\n\r\n\t\t<br/>\r\n    <p-scrollPanel [style]=\"{height: '70%'}\">\r\n      <ng-container #tab></ng-container>\r\n    </p-scrollPanel>\r\n  </div>\r\n</div>\r\n"
+module.exports = "<p-growl [value]=\"homeMsgs\" [sticky]=\"true\"></p-growl>\r\n<cookie-law learnMore=\"/#privacyPolicy\" position=\"top\"></cookie-law>\r\n\r\n<div class=\"containerHomePage\">\r\n\t<div id=\"logincard\" class=\"home-card ui-grid ui-grid-responsive\">\r\n    <h1 style=\"text-align: center;\">Welcome to</h1>\r\n\t\t<a href=\"\">\r\n\t\t\t<img style=\"text-align: center; padding-bottom: 25px; width: 35%; margin: auto\" class=\"ui-grid-row\" src=\"assets/img/clickdigitallogo_white.svg\">\r\n\t\t</a>\r\n    <p-tabMenu id=\"tabMenu\" #tabMenu></p-tabMenu>\r\n\r\n\t\t<br/>\r\n    <p-scrollPanel [style]=\"{height: '70%'}\">\r\n      <ng-container #tab></ng-container>\r\n    </p-scrollPanel>\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -20591,7 +20591,7 @@ module.exports = "<p-growl [value]=\"homeMsgs\" [sticky]=\"true\"></p-growl>\r\n
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".containerHomePage {\n  width: 100vw;\n  height: 100vh;\n  background-image: url(\"/../bcklogin.jpg\");\n  background-size: cover;\n  background-attachment: fixed; }\n\n.home-card {\n  align-content: center;\n  width: available;\n  height: available;\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  margin: 40px;\n  background: rgba(96, 191, 161, 0.6);\n  border: none;\n  padding: 15px; }\n\n#logincard {\n  color: #FFFFFF !important; }\n\n.home-card .ui-tabmenu .ui-tabmenu-nav {\n  display: flex;\n  justify-content: center;\n  background-color: transparent; }\n\n.home-card .ui-widget-content {\n  background-color: transparent;\n  border: none; }\n\n.home-card .ui-tabmenuitem {\n  background: #297E60 !important;\n  border-color: #297E60 !important; }\n\n.home-card .ui-tabmenuitem.ui-state-active {\n  background: #297E60 !important;\n  border-color: #FFFFFF !important; }\n\n.home-card .ui-confirmdialog {\n  top: 50% !important;\n  left: 50% !important; }\n"
+module.exports = ".containerHomePage {\n  width: 100vw;\n  height: 100vh;\n  background-image: url('bcklogin.jpg');\n  background-size: cover;\n  background-attachment: fixed; }\n\n.home-card {\n  align-content: center;\n  width: available;\n  height: available;\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  margin: 40px;\n  background: rgba(96, 191, 161, 0.6);\n  border: none;\n  padding: 15px; }\n\n#logincard {\n  color: #FFFFFF !important; }\n\n.home-card .ui-tabmenu .ui-tabmenu-nav {\n  display: flex;\n  justify-content: center;\n  background-color: transparent; }\n\n.home-card .ui-widget-content {\n  background-color: transparent;\n  border: none; }\n\n.home-card .ui-tabmenuitem {\n  background: #297E60 !important;\n  border-color: #297E60 !important; }\n\n.home-card .ui-tabmenuitem.ui-state-active {\n  background: #297E60 !important;\n  border-color: #FFFFFF !important; }\n\n.home-card .ui-confirmdialog {\n  top: 50% !important;\n  left: 50% !important; }\n"
 
 /***/ }),
 
@@ -21326,8 +21326,8 @@ __webpack_require__.r(__webpack_exports__);
 var environment = {
     production: false,
     websocketProtocol: 'ws://',
-    httpMode: 'http://',
     // environment variables set in assets/env.js
+    httpMode: window['env']['httpMode'],
     baseUrl: window['env']['baseUrl'],
     contextRoot: window['env']['contextRoot'],
     // keycloak configuration
