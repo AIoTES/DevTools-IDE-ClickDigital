@@ -1,32 +1,30 @@
 version: '3'
-services:    
-
+services:
+ 
     db:
         image: docker-activage.satrd.es/mongo:3.6
-        build: ./mongo
         container_name: mongo
         ports:
-          - "27017:27017"
-          
+            - "27017:27017"
+ 
     backend:
         image: docker-activage.satrd.es/clickdigital-backend:integrated_8
-        build: ./backend
         container_name: clickdigital-backend
         ports:
-          - "9999:8080"
+            - "9999:8080"
         depends_on:
-          - db
-
+            - db
+ 
     frontend:
-        image: docker-activage.satrd.es/clickdigital-frontend:integrated_8
-        build: ./frontend
+        image: docker-activage.satrd.es/clickdigital-frontend:integrated_10
         container_name: clickdigital-frontend
         environment:
+          - HTTP_MODE=http://
           - BASE_URL=localhost:9999
           - KEYCLOAK_URL=https://aiotes.igd.fraunhofer.de:8081/auth
           - KEYCLOAK_REALM=activage
           - KEYCLOAK_CLIENT=tools-user-login
         ports:
-          - "80:80"
+            - "80:80"
         depends_on:
-          - backend
+            - backend
