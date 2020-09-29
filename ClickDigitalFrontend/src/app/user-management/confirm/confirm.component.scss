@@ -1,0 +1,52 @@
+.containerHomePage{
+  width: 100%;
+  height: 100%;
+  background-image: url("../bcklogin.jpg");
+  background-size: cover;
+}
+.home-card{
+  align-content: center;
+  width: auto;
+  height: auto;
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 40px;
+  background:rgba(96, 191, 161,0.6);
+  border: 0.5px;
+  border-style: solid;
+  border-color: rgba(255,255,255,0.3);
+  padding: 15px;
+}
+
+.ui-tabmenu {
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+.ui-tabmenu .ui-tabmenu-nav {
+  display: flex;
+  justify-content: center;
+  border-bottom: 0px !important;
+  border-radius: 5px !important;
+}
+
+.ui-tabmenuitem {
+  background: #14B404 !important;
+  border-color: green !important;
+}
+
+.ui-tabmenuitem.ui-state-active {
+  background: #01DF21 !important;
+  border-color: #088A08 !important;
+}
+
+.ui-menuitem-text {
+  color: #FFFFFF !important;
+}
+
+
+.ui-menuitem-icon {
+   color: #FAFAFA !important;
+}

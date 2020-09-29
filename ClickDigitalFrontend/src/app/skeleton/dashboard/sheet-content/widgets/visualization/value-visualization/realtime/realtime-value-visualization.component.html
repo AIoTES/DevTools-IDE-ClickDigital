@@ -1,0 +1,104 @@
+<p-dialog header="Visualization Data Settings" [modal]=true appendTo="body" [width]="550" [closable]="false" [visible]= "displaySettings">
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <h3>Representation settings</h3>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">Real Time Type:</div>
+      <p-dropdown [autoWidth]="true"
+                  [options]="preSelect" placeholder="Select an entity" [(ngModel)]="selectedEntityType"
+                  [style]="{'width':'200px'}" (onChange)="refreshDeviceDropdown()" appendTo="body">
+      </p-dropdown>
+    </div>
+    <div class="ui-g-12" style="width:10px;"></div>
+    <div class="ui-g-12">
+      <h3>Input settings</h3>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">Device:</div>
+      <div class="ui-g-8">
+        <p-dropdown appendTo="body" [options]="devicesList" placeholder="Select a device" [(ngModel)]="selectedDevice"
+                    (onChange)="updateDropdowns()" [style]="{'width':'200px'}">
+        </p-dropdown>
+      </div>
+    </div>
+    <div *ngIf="selectedEntityType === valueType.sensor" class="ui-g-12">
+      <div class="ui-g-4">Sensor:</div>
+      <div class="ui-g-8">
+        <p-dropdown appendTo="body" [options]="sensorList" placeholder="Select a sensor" [(ngModel)]="selectedEntity"
+                    [style]="{'width':'200px'}"(onChange)="this.setCompletedField(true);">
+        </p-dropdown>
+      </div>
+    </div>
+    <div *ngIf="selectedEntityType  === valueType.action" class="ui-g-12">
+      <div class="ui-g-4">Action:</div>
+      <div class="ui-g-8">
+        <p-dropdown [autoWidth]="true"
+                    [options]="actionList" placeholder="Select an action" [(ngModel)]="selectedEntity"
+                   [style]="{'width':'200px'}" (onChange)="this.setCompletedField(true);">
+        </p-dropdown>
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">Position:</div>
+      <div class="ui-g">
+        <div class="ui-g-12"><p-radioButton  name="positionGroup" value="right" label="right" [(ngModel)]="selectedPosition" ></p-radioButton></div>
+        <div class="ui-g-12"><p-radioButton name="positionGroup" value="bottom" label="bottom" [(ngModel)]="selectedPosition" ></p-radioButton></div>
+      </div>
+    </div>
+  </div>
+  <p-footer>
+    <button type="'button" pButton icon="fa-check" (click)="applySettings()" label="Apply" [disabled]="!isCompletedField"></button>
+    <button type="button" pButton icon="fa-close" (click)="abortChanges()" label="Cancel"></button>
+  </p-footer>
+</p-dialog>
+<button [hidden]="!(loginStatus>1 && currentWidget.isDeveloped)" pButton icon="fa fa-cog" style="z-index: 6;" class="settings-button transparentButton tbutton ui-button-secondary" (mousedown)="$event.stopPropagation()" (touchstart)="$event.stopPropagation()" (click)="displaySettings=true;"  ></button>
+
+<div *ngIf="selectedPosition === 'bottom'">
+  <div style="display: flex; flex-direction:row; align-items: center; height:100%; width:100%;">
+    <div>
+      <input pInputText *ngIf="currentWidget.isDeveloped" style="width:100%; min-width:150px;" [(ngModel)]="currentWidget.name"
+             (ngModelChange)="saveInDatabase($event, 'name')" class="gridster-item-content"
+             (mousedown)="$event.stopPropagation()" (touchstart)="$event.stopPropagation()">
+      <h2 *ngIf="!currentWidget.isDeveloped" style="margin: 0; width:100%;">{{ currentWidget.name }}</h2>
+
+      <input pInputText *ngIf="currentWidget.isDeveloped" [placeholder]="'Additional info'" style="width:100%; min-width:150px; " [(ngModel)]="currentWidget.additionalInfo" (ngModelChange)="saveInDatabase($event, 'additionalInfo')"
+             (mousedown)="$event.stopPropagation()" (touchstart)="$event.stopPropagation()" class="gridster-item-content">
+      <div *ngIf="!currentWidget.isDeveloped" style="margin: 0; color: grey; width:100%;">{{ currentWidget.additionalInfo }}</div>
+    </div>
+  </div>
+
+  <div *ngIf="selectedEntityType === valueType.sensor" #container4 style="width:100%; height:100%;">
+    <div [fittext]="true" [activateOnResize]="true" [container]="container4" [modelToWatch]="currentWidget.value" class="angular-with-newlines" style="text-align: center; vertical-align: middle;">{{currentWidget.value}}
+    </div>
+
+  </div>
+  <div *ngIf="selectedEntityType === valueType.action" #container3 style="width:100%; height:100%;">
+    <div [fittext]="true" [activateOnResize]="true" [container]="container3" [modelToWatch]="currentWidget.value" class="angular-with-newlines" style="text-align: center; vertical-align: middle;">{{currentWidget.value}}
+    </div>
+  </div>
+</div>
+
+<div *ngIf="selectedPosition === 'right'" style="display: flex; flex-direction:row; align-items: center; height:100%; width:100%; ">
+  <div>
+    <input pInputText *ngIf="currentWidget.isDeveloped" style="width:100%; min-width:150px;" [(ngModel)]="currentWidget.name" (ngModelChange)="saveInDatabase($event, 'name')"
+           (mousedown)="$event.stopPropagation()" (touchstart)="$event.stopPropagation()" class="gridster-item-content">
+    <h2 *ngIf="!currentWidget.isDeveloped" style="margin: 0; width:100%;">{{ currentWidget.name }}</h2>
+
+    <input pInputText *ngIf="currentWidget.isDeveloped" style="width:100%; min-width:150px; " [(ngModel)]="currentWidget.additionalInfo" (ngModelChange)="saveInDatabase($event, 'additionalInfo')"
+           (mousedown)="$event.stopPropagation()" (touchstart)="$event.stopPropagation()" class="gridster-item-content">
+    <div *ngIf="!currentWidget.isDeveloped" style="margin: 0; color: grey; width:100%;">{{ currentWidget.additionalInfo }}</div>
+  </div>
+
+  <div *ngIf="selectedEntityType === valueType.sensor" #container1 style="padding-left: 15px; text-align: center; width:100%; height:100%;min-width: 39px">
+    <div [fittext]="true" [activateOnResize]="true" [container]="container1" [modelToWatch]="currentWidget.value" class="angular-with-newlines" style="text-align: center; vertical-align: middle;">{{ currentWidget.value }}
+      <!--input display = "!(this.currentWidget.graphType==='realtime')"  width="auto" type="text" pInputText [(ngModel)]="realTimeUnit"/-->
+  </div>
+
+  </div>
+  <div *ngIf="selectedEntityType === valueType.action" #container2 style="width: 100%;height:100%;min-width: 39px;text-align: center; padding-left: 15px;">
+    <div [fittext]="true" [activateOnResize]="true" [container]="container1" [modelToWatch]="currentWidget.value" class="angular-with-newlines" style="text-align: center; vertical-align: middle;">{{ currentWidget.value }}
+    </div>
+  </div>
+</div>
+

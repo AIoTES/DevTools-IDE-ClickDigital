@@ -1,0 +1,172 @@
+<p-dialog header="Line Chart Settings" [modal]=true appendTo="body" [width]="700"
+          [(visible)]="displaySettings" [closable]="false">
+  <div class="ui-g">
+    <div class="ui-g-12 grid-elem">
+      <h3>Preferences</h3>
+    </div>
+    <div class="ui-g-12 grid-elem">
+      <div class="ui-g-4 grid-elem">Number of sensors:</div>
+      <div class="ui-g-4"><p-radioButton name="sensorNumber" value="true" label="one" [(ngModel)]="sensorNumber" inputId="one" (click)="setIsMonoVis('true');"></p-radioButton></div>
+      <div class="ui-g-4"><p-radioButton name="sensorNumber" value="false" label="many" [(ngModel)]="sensorNumber" inputId="many" (click)="setIsMonoVis('false');"></p-radioButton></div>
+    </div>
+    <div class="ui-g-12 grid-elem">
+      <div class="ui-g-4 grid-elem">Type of data:</div>
+      <div class="ui-g-4"><p-radioButton name="dataType" value="true" label="realtime" [(ngModel)]="dataType" inputId="realtime" (click)="setIsRealtime('true');"></p-radioButton></div>
+      <div class="ui-g-4"><p-radioButton name="dataType" value="false" label="historical" [(ngModel)]="dataType" inputId="historical" (click)="setIsRealtime('false');"></p-radioButton></div>
+    </div>
+    <div class="ui-g-12 grid-elem">
+    <div class="ui-g-4 grid-elem">Data dependency:</div>
+    <div class="ui-g-4"><p-radioButton name="dataDependency" value="true" label="time-based" [(ngModel)]="dataDependency" inputId="time" (click)="setIsTimeBased('true');"></p-radioButton></div>
+    <div *ngIf="!isMonoVis" class="ui-g-4"><p-radioButton name="dataDependency" value="false" label="value-based" [(ngModel)]="dataDependency" inputId="value" (click)="setIsTimeBased('false');"></p-radioButton></div>
+  </div>
+    <div class="ui-g-12 grid-elem">
+      <h3>Representation</h3>
+    </div>
+    <div class="ui-g-12 grid-elem">
+      <div class="ui-g-4 grid-elem">X axes label:</div>
+      <input pInputText class="gridster-item-content" [(ngModel)]="this.axesOptions.xLabel"  style="width: 200px; padding-left: 0;">
+    </div>
+    <div class="ui-g-12 grid-elem">
+      <div class="ui-g-4 grid-elem">Y axes label:</div>
+      <input pInputText class="gridster-item-content" [(ngModel)]="this.axesOptions.yLabel"  style="width: 200px; padding-left: 0;">
+    </div>
+    <div *ngIf="isRealtime === true; else historic" class="ui-g-12 grid-elem">
+      <div class="ui-g-4 grid-elem">Number of samples:</div>
+      <input pInputText class="gridster-item-content" [(ngModel)]="this.selectedNumberOfValues"  style="width: 200px; padding-left: 0;">
+    </div>
+    <ng-template #historic>
+      <div class="ui-g-12 grid-elem">
+      <div class="ui-g-4 grid-elem">Time Period:</div>
+      <div class="ui-g-2 grid-elem">from</div>
+      <p-calendar [(ngModel)]="selectedStart" [showTime]="true" [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true" yearRange="1970:2020" appendTo="body"></p-calendar>
+      </div>
+      <div class="ui-g-12 grid-elem">
+        <div class="ui-g-4 grid-elem"></div>
+        <div class="ui-g-2 grid-elem">to</div>
+        <p-calendar [(ngModel)]="selectedEnd" [showTime]="true" [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true" yearRange="1970:2020" appendTo="body"></p-calendar>
+      </div>
+    </ng-template>
+    <div class="ui-g-12" style="width:10px;"></div>
+    <div class="ui-g-12 grid-elem">
+      <h3>Input Data</h3>
+    </div>
+    <div *ngIf="(!isMonoVis) && (!isTimeBased)">
+      <div class="ui-g-12 grid-elem">
+        <div class="ui-g-4 grid-elem">Line color:</div>
+        <p-colorPicker [(ngModel)]="xElem.deviceEntity.color"></p-colorPicker>
+      </div>
+      <div class="ui-g-12 grid-elem">
+        <div class="ui-g-4 grid-elem">Line type:</div>
+        <p-dropdown [autoWidth]="true" [placeholder]="'Select a line type'"
+                    [options]="lineTypeList" [(ngModel)]="xElem.deviceEntity.lineType"
+                    [style]="{'width':'200px'}"  appendTo="body">
+        </p-dropdown>
+        <div class="dropdown"></div>
+      </div>
+      <div class="ui-g-12 grid-elem">
+        <div class="ui-g-4 grid-elem"></div>
+        <p-checkbox [(ngModel)]="xElem.deviceEntity.fillArea" binary="true"></p-checkbox>fill area under line
+      </div>
+      <div class="ui-g-12 grid-elem">
+        <div class="ui-g-4 grid-elem"></div>
+        <p-checkbox [(ngModel)]="xElem.deviceEntity.showLine" binary="true"></p-checkbox>connect data points with a line
+      </div>
+      <div class="ui-g-12 grid-elem">
+        <h4 style="margin:0;">X Axis</h4>
+      </div>
+      <div class="ui-g-12 grid-elem">
+        Device:
+        <p-dropdown appendTo="body" [options]="devicesList" (onChange)="setSensorDropdown(xElem.deviceEntity.deviceId)"
+                    [filter]="true" [(ngModel)]="xElem.deviceEntity.deviceId"
+                    [style]="{'width':'200px'}" placeholder="Select a device">
+        </p-dropdown>
+
+        Sensor:
+        <p-dropdown appendTo="body" [options]="xElem.sensorList" [filter]="true" [(ngModel)]="xElem.deviceEntity.entityId"
+                    [style]="{'width':'200px'}" placeholder="Select a sensor">
+        </p-dropdown>
+      </div>
+      <div class="ui-g-12 grid-elem">
+        <h4 style="margin:0;">Y Axis</h4>
+      </div>
+      <div class="ui-g-12 grid-elem">
+        Device:
+        <p-dropdown appendTo="body" [options]="devicesList" (onChange)="setSensorDropdown(yElem.deviceEntity.deviceId)"
+                    [filter]="true" [(ngModel)]="yElem.deviceEntity.deviceId"
+                    [style]="{'width':'200px'}" placeholder="Select a device">
+        </p-dropdown>
+
+        Sensor:
+        <p-dropdown appendTo="body" [options]="yElem.sensorList" [filter]="true" [(ngModel)]="yElem.deviceEntity.entityId"
+                    [style]="{'width':'200px'}" placeholder="Select a sensor">
+        </p-dropdown>
+      </div>
+    </div>
+
+    <p-accordion *ngIf="isMonoVis || isTimeBased" [multiple]="true">
+      <div *ngFor="let group of dropdownList" class="ui-g-12 grid-elem">
+        <p-accordionTab  style="align-items: center; overflow: auto; width: 100%;">
+          <p-header>
+            Device:
+            <p-dropdown appendTo="body" [options]="devicesList" (onChange)="setSensorDropdown(group.deviceEntity.deviceId)"
+                        [filter]="true" [(ngModel)]="group.deviceEntity.deviceId"
+                        [style]="{'width':'200px'}" placeholder="Select a device" (onClick)="$event.stopPropagation();$event.preventDefault();">
+            </p-dropdown>
+
+            Sensor:
+            <p-dropdown appendTo="body" [options]="group.sensorList" [filter]="true" [(ngModel)]="group.deviceEntity.entityId"
+                        [style]="{'width':'200px'}" placeholder="Select a sensor" (onClick)="$event.stopPropagation();$event.preventDefault();">
+            </p-dropdown>
+
+            <button *ngIf="!isMonoVis" style = "margin-left: 10px;" type="button" pButton icon="fa fa-minus" (click)="$event.stopPropagation();$event.preventDefault();deleteDropdowns(group.deviceEntity);"></button>
+
+          </p-header>
+          <div class="ui-g-12 grid-elem">
+            <div class="ui-g-4 grid-elem">Data label:</div>
+            <input pInputText class="gridster-item-content" [(ngModel)]="group.deviceEntity.label"  style="width: 200px; padding-left: 0;">
+          </div>
+          <div class="ui-g-12 grid-elem">
+            <div class="ui-g-4 grid-elem">Data unit:</div>
+            <input pInputText class="gridster-item-content" [(ngModel)]="group.deviceEntity.unit"  style="width: 200px; padding-left: 0;">
+          </div>
+          <div class="ui-g-12 grid-elem">
+            <div class="ui-g-4 grid-elem">Line color:</div>
+            <p-colorPicker [(ngModel)]="group.deviceEntity.color"></p-colorPicker>
+          </div>
+          <div class="ui-g-12 grid-elem">
+            <div class="ui-g-4 grid-elem">Line type:</div>
+            <p-dropdown [autoWidth]="true" [placeholder]="'Select a line type'"
+                        [options]="lineTypeList" [(ngModel)]="group.deviceEntity.lineType"
+                        [style]="{'width':'200px'}"  appendTo="body">
+            </p-dropdown>
+            <div class="dropdown"></div>
+          </div>
+          <div class="ui-g-12 grid-elem">
+            <div class="ui-g-4 grid-elem"></div>
+            <p-checkbox [(ngModel)]="group.deviceEntity.fillArea" binary="true"></p-checkbox>fill area under line
+          </div>
+          <div class="ui-g-12 grid-elem">
+            <div class="ui-g-4 grid-elem"></div>
+            <p-checkbox [(ngModel)]="group.deviceEntity.showLine" binary="true"></p-checkbox>connect data points with a line
+          </div>
+        </p-accordionTab>
+      </div>
+    </p-accordion>
+
+    <div class="ui-g-12" *ngIf="!isMonoVis && isTimeBased">
+      <button type="button" pButton icon="fa fa-plus" (click)="addNewDropdowns()"></button>
+    </div>
+  </div>
+  <p-footer>
+    <button type="button" pButton icon="fa-check" (click)="applySettings();" label="Apply"></button>
+    <button type="button" pButton icon="fa-close" (click)="abortChanges()" label="Cancel"></button>
+  </p-footer>
+</p-dialog>
+<button pButton icon="fa fa-cog" style="z-index: 6;" class="settings-button transparentButton tbutton ui-button-secondary"
+        (mousedown)="$event.stopPropagation()" (touchstart)="$event.stopPropagation()" (click)="displaySettings=true;isAllowed=false;"
+        [hidden]=" !(loginStatus>1 && currentWidget.isDeveloped)"></button>
+<!--*ngIf="myChart != undefined && myChart.data!= undefined && myChart.data.datasets != []"-->
+<div  class="graph-canvas">
+  <canvas #chart>{{myChart}}</canvas>
+</div>
+

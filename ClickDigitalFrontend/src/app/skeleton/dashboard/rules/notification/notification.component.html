@@ -1,0 +1,48 @@
+<p-confirmDialog appendTo="body" key="datanotification_{{currentWidget.id}}"></p-confirmDialog>
+
+<p-growl [(value)]="messeges" life="4000"></p-growl>
+
+<p-dataView #dv [value]="notifications" [paginator]="true" [rows]="4" paginatorPosition="bottom"
+            filterBy="name"
+            [sortField]="sortField" [sortOrder]="sortOrder">
+  <p-header>
+    <div class="ui-helper-clearfix">
+      <div class="ui-g">
+        <div class="ui-g-6 ui-md-4">
+          <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By"
+                      (onChange)="onSortChange($event)" [autoWidth]="false" [style]="{'min-width':'15em'}" class="gridster-item-content"></p-dropdown>
+        </div>
+        <div class="ui-g-6 ui-md-8" style="text-align:right">
+
+          <input type="search" pInputText placeholder="Search by name" (keyup)="dv.filter($event.target.value)" class="gridster-item-content">
+          <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+        </div>
+      </div>
+    </div>
+  </p-header>
+  <ng-template let-datanotification pTemplate="listItem">
+    <div class="ui-g" style="padding: 0.2em;border-bottom: 1px solid #d9d9d9;background: #eff1f4;border :  none;">
+      <div class="ui-g-11 ui-md-11 rule-details" *ngIf="datanotification.notification">
+        <div class="ui-g">
+                <div class="ui-g-4 ui-sm-4" ><strong>{{ datanotification.notification.relation }} name : </strong> {{ datanotification.data.name }}</div>
+                <div class="ui-g-4 ui-sm-4"><strong>Event : </strong> {{ datanotification.notification.event }}</div>
+                <div class="ui-g-4 ui-sm-4"><strong>Date : </strong> {{ datanotification.notification.date  | date: 'dd/MM/yyyy H:mm:ss' }}</div>
+        </div>
+      </div>
+      <div class="ui-g-1 ui-md-1">
+        <button pButton type="button" icon="fa fa-trash" class="gridster-item-content ui-button-danger " (click)="confirmNotificationDelete(datanotification.notification)"></button>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template let-datanotification pTemplate="gridItem">
+    <div style="padding:.5em" class="ui-g-12 ui-md-3">
+      <p-panel [header]="datanotification.rulename" [style]="{'text-align':'center'}" >
+        <div class="rule-detail" >{{ datanotification.data.name }} - {{ datanotification.notification.event }}</div>
+        <br>
+        <div class="rule-detail">{{ datanotification.notification.date | date: 'dd/MM/yyyy H:mm:ss' }}</div>
+        <hr class="ui-widget-content" style="border-top:0">
+        <button pButton type="button" icon="fa fa-trash" class="gridster-item-content ui-button-danger " (click)="confirmNotificationDelete(datanotification.notification)"></button>
+      </p-panel>
+    </div>
+  </ng-template>
+</p-dataView>

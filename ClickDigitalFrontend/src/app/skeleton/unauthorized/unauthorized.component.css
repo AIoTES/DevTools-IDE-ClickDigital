@@ -1,0 +1,15 @@
+
+#mainContent {
+  position: absolute;
+  left: 50px;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.middlecardSheet {
+  left: 0;
+  right: 0;
+  height: 100%;
+}
+

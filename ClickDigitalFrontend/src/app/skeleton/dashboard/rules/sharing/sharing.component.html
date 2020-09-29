@@ -1,0 +1,81 @@
+<div class="ui-g">
+  <div class="ui-g-12" style="font-size: 14px;">
+    <p-messages [(value)]="messeges" ></p-messages>
+  </div>
+</div>
+<p-dataView #dv [value]="autoSelects" [paginator]="false" [rows]="2" >
+  <p-header styleClass="my-panel">
+    <div class="ui-helper-clearfix">
+      <div class="ui-g header-details">
+        <div class="ui-g-12" style="padding: 0px;" >
+          <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+          <button pButton type="button" label="Clear" class="gridster-item-content ui-button-secondary clear-button" (click)="clearRuleUser()" style="width: 90px;"></button>
+          <button pButton type="button" label="Share"  (click)="shareRuleToUser(user,rule)" style="width: 90px;" class="gridster-item-content"></button>
+        </div>
+      </div>
+    </div>
+  </p-header>
+  <ng-template let-select pTemplate="listItem">
+    <div class="ui-g" style="padding: .3em;">
+      <div class="ui-g-12">
+          <div  *ngIf="select.name === 'User'" >
+            <span class="first autocomplete_label">User  </span>
+            <p-autoComplete [(ngModel)]="user" field="username" [suggestions]="filteredUsers"
+                            (completeMethod)="filterUsers($event)" [size]="33"
+                            [minLength]="1" placeholder="filter by name" [dropdown]="true" class="gridster-item-content">
+              <ng-template let-user pTemplate="item">
+                <div class="ui-helper-clearfix" >
+                  <div style="font-size:14px;float:right;">
+                    <span>{{ user.username }} -- </span>
+                    <span>{{ user.email }}</span>
+                  </div>
+                </div>
+              </ng-template>
+            </p-autoComplete>
+          </div>
+          <div *ngIf="select.name === 'Rule'" >
+            <span class="first autocomplete_label">Rule  </span>
+            <p-autoComplete [(ngModel)]="rule" field="name" [suggestions]="filteredRules" (completeMethod)="filterRules($event)" [size]="33"
+                            [minLength]="1" placeholder="filter by name" [dropdown]="true" class="gridster-item-content">
+              <ng-template let-rule pTemplate="item">
+                <div class="ui-helper-clearfix" >
+                  <div style="font-size:14px;float:right;">{{ rule.name }}</div>
+                </div>
+              </ng-template>
+            </p-autoComplete>
+            <br><br>
+          </div>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template let-select pTemplate="gridItem">
+    <div style="padding:.1em" >
+      <p-panel [header]="select.name" [style]="{'text-align':'center'}">
+        <div *ngIf="select.name === 'User'" >
+          <p-autoComplete [(ngModel)]="user" field="username" [suggestions]="filteredUsers" (completeMethod)="filterUsers($event)" [size]="15"
+                          [minLength]="1" placeholder="filter by name" [dropdown]="true" class="gridster-item-content">
+            <ng-template let-user pTemplate="item">
+              <div class="ui-helper-clearfix" >
+                <div style="font-size:14px;float:right;">
+                  <span>{{ user.username }} -- </span>
+                  <span>{{ user.email }}</span>
+                </div>
+              </div>
+            </ng-template>
+          </p-autoComplete>
+        </div>
+        <div *ngIf="select.name === 'Rule'" >
+          <p-autoComplete [(ngModel)]="rule" field="name" [suggestions]="filteredRules" (completeMethod)="filterRules($event)" [size]="15"
+                          [minLength]="1" placeholder="filter by name" [dropdown]="true" class="gridster-item-content">
+            <ng-template let-rule pTemplate="item">
+              <div class="ui-helper-clearfix" >
+                <div style="font-size:14px;float:right;">{{ rule.name }}</div>
+              </div>
+            </ng-template>
+          </p-autoComplete>
+        </div>
+      </p-panel>
+    </div>
+  </ng-template>
+</p-dataView>
+

@@ -1,0 +1,21 @@
+.input-slider {
+  width: 4vw;
+}
+.unknown {
+  font-style:italic;
+}
+
+::ng-deep .ui-slider {
+  margin: 0 auto;
+}
+.settings-button {
+  transition: all 0.5s;
+  position: absolute;
+  right: 75px;
+  top: 5px;
+}
+
+
+.testclass {
+  width:95%; float:right;
+}

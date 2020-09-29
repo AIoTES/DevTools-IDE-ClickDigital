@@ -1,0 +1,71 @@
+#siteContainer {
+  height: 100%;
+  width: 100%;
+  display: table-row;
+  background: white;
+  padding: 4px;
+}
+#menuContainer{
+  display: table-row;
+}
+
+.expansion-panel{
+position: relative;
+  margin: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.rightside {
+  position: absolute;
+  right: 20px;
+  bottom: 3px;
+}
+.bottom_toolbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.devices{
+  text-align: right;
+}
+
+.edit-button {
+  position: absolute;
+  right: 50px;
+}
+.delete-button {
+  position: absolute;
+  right: 90px;
+}
+
+
+.add-sign{
+  color: gray;
+  font-size: 200px;
+}
+.button-circle-middle{
+  margin-bottom: 10px;
+}
+
+.textNoPlatforms{
+
+}
+.container-NoPlatforms{
+  position: absolute;
+  top:40%;
+  left: 35%;
+  text-align: center;
+}
+
+::ng-deep .ui-accordion-header{
+  overflow: auto;
+  align-items: center !important;
+  margin-top: auto !important;
+  margin-bottom: auto !important;
+  padding: 0 !important;
+}
+::ng-deep .ng-tns-c6-23 {
+  padding: 0;
+}

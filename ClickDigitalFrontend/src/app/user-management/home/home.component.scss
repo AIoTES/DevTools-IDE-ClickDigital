@@ -1,0 +1,52 @@
+.containerHomePage{
+  width: 100vw;
+  height: 100vh;
+  background-image: url("../bcklogin.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+}
+.home-card{
+  align-content: center;
+  width: available;
+  height: available;
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 40px;
+  background:rgba(96, 191, 161,0.6);
+  border: none;
+  padding: 15px;
+}
+
+#logincard {
+  color: #FFFFFF !important;
+}
+
+.home-card .ui-tabmenu .ui-tabmenu-nav {
+  display: flex;
+  justify-content: center;
+  background-color: transparent;
+}
+
+.home-card .ui-widget-content {
+  background-color: transparent;
+  border:none;
+}
+
+.home-card .ui-tabmenuitem {
+  background: #297E60 !important;
+  border-color: #297E60 !important;
+}
+
+.home-card .ui-tabmenuitem.ui-state-active {
+  background: #297E60 !important;
+  border-color: #FFFFFF !important;
+}
+
+.home-card .ui-confirmdialog{
+  top: 50% !important;
+  left:50% !important;
+}
+

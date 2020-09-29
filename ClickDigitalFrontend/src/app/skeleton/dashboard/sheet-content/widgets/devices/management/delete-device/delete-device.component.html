@@ -1,0 +1,28 @@
+
+
+<div style="display: flex; flex-direction:column; align-items: center; height:100%; width:100%;">
+  <div style="display: flex; flex-direction:row; align-items: center; height:100%; width:100%;">
+
+  <div style="width:100%;">
+    <p-dropdown appendTo="body" [options]="devices" placeholder="Select a device" optionLabel="name"
+                [(ngModel)]="selectedDevice" [style]="{'width':'100%'}" class="gridster-item-content" (onClick)="updateDevices()">
+    </p-dropdown>
+
+  </div>
+<div style="width:fit-content; padding-left: 15px;">
+  <button pButton="delete" icon="fa fa-trash" (mousedown)="$event.stopPropagation()"
+          (touchstart)="$event.stopPropagation()" (click)="deleteDevice()" class="gridster-item-content">
+  </button>
+</div>
+  </div>
+
+  <div style="width: fit-content" class="ui-message ui-messages-success ui-corner-all"
+       *ngIf="isSuccess">
+    <span>Device was deleted.</span>
+  </div>
+  <div style="width: fit-content" class="ui-message ui-messages-error ui-corner-all"
+       *ngIf="isFail">
+    <span>Device could not been deleted. Please try again later.</span>
+  </div>
+
+</div>

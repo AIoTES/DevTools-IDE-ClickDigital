@@ -1,0 +1,14 @@
+<div class="ui-g">
+  <div class="ui-lg-12 ui-md-12">
+    <p-autoComplete [(ngModel)]="existingAction"
+                    [suggestions]="actions"
+                    field="name"
+                    (completeMethod)="searchAction($event)"
+                    [dropdown]="true"
+                    [size]="73"
+                    placeholder="Select action"
+                    (onSelect)="addSelectedAction(existingAction);">
+    </p-autoComplete>
+  </div>
+</div>
+

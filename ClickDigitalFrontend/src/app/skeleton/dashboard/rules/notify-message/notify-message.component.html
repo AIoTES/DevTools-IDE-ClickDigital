@@ -1,0 +1,20 @@
+<button id="notification-message" data-badge="" type="button" pButton icon="fa fa-bell" [ngClass]="{'notify-badge': isMessages }" (click)="notifyMessages()">
+</button>
+<p-card *ngIf="showNotifications"  [style]="{position: 'absolute',zIndex: '10',  maxWidth: '300px',right: '77px', maxHeight: '420px'}">
+  <p-header>
+    <div class="ui-g notification-header">
+      <div class="ui-g-10 ui-md-10">
+        <strong>Notifications</strong>
+      </div>
+      <div class="ui-g-2 ui-md-2">
+        <i  class="fa fa-cog notification-settings" (click)="notificationSettings()"></i>
+      </div>
+    </div>
+  </p-header>
+  <div *ngFor="let message of showNotificationBoxMessages" class="ui-g-12 ui-md-12 notify-message">
+  {{ message.relation }} {{ message.name }} -- {{ message.event }}
+    <div style="font-size: 11px;">
+      {{ message.date | date : 'dd/MM/yyyy H:mm:ss' }}
+    </div>
+  </div>
+</p-card>

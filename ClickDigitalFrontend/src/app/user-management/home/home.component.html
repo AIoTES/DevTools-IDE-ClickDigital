@@ -1,0 +1,17 @@
+<p-growl [value]="homeMsgs" [sticky]="true"></p-growl>
+<cookie-law learnMore="/#privacyPolicy" position="top"></cookie-law>
+
+<div class="containerHomePage">
+	<div id="logincard" class="home-card ui-grid ui-grid-responsive">
+    <h1 style="text-align: center;">Welcome to</h1>
+		<a href="">
+			<img style="text-align: center; padding-bottom: 25px; width: 35%; margin: auto" class="ui-grid-row" src="assets/img/clickdigitallogo_white.svg">
+		</a>
+    <p-tabMenu id="tabMenu" #tabMenu></p-tabMenu>
+
+		<br/>
+    <p-scrollPanel [style]="{height: '70%'}">
+      <ng-container #tab></ng-container>
+    </p-scrollPanel>
+  </div>
+</div>

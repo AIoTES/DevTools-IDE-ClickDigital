@@ -1,0 +1,200 @@
+
+<p-dialog  header="User Settings" [modal]=true appendTo="body" [width]="550"
+          [(visible)]="userSettings" [closable]="false">
+  <form [formGroup]="userform" (ngSubmit)="saveNewPassword(userform.value)">
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <h3>Change Password</h3>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">Old Password:</div>
+      <input pInputText type="password" formControlName="OldPassword" placeholder="Enter old password">
+    </div>
+
+    <div class="ui-g-12">
+      <div class="ui-g-4">New Password:</div>
+      <input pInputText type="password" formControlName="Password" placeholder="Enter new password">
+      <div style="width: fit-content" class="ui-message ui-messages-error ui-corner-all" *ngIf="!userform.controls['Password'].valid&&userform.controls['Password'].dirty">
+        <span *ngIf="userform.controls['Password'].errors['required']">Password is required</span>
+        <span *ngIf="userform.controls['Password'].errors['minlength']">Must be longer than 6 characters</span>
+        <span *ngIf="userform.controls['Password'].errors['notMatchOther']">Has to be different from the old password</span>
+      </div>
+    </div>
+
+    <div class="ui-g-12">
+      <div class="ui-g-4">Password repetition:</div>
+      <input pInputText type="password" formControlName="PasswordRepetition" placeholder="Renter new password">
+      <div style="width: fit-content" class="ui-message ui-messages-error ui-corner-all" *ngIf="!userform.controls['PasswordRepetition'].valid&&userform.controls['PasswordRepetition'].dirty">
+        <span>Passwords do not match</span>
+      </div>
+    </div>
+
+    <div class="ui-g-12">
+      <button [disabled]="!userform.valid" type="submit" pButton icon="fa-check"  label="Submit"></button>
+    </div>
+  </div>
+  </form>
+
+  <!--form [formGroup]="emailform" (ngSubmit)="saveNewEmail(emailform.value)">
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <h3>Change E-Mail address</h3>
+    </div>
+    <div class="ui-g-12" style="width:10px;"></div>
+
+    <div class="ui-g-12">
+      <div class="ui-g-4">New E-Mail:</div>
+      <input formControlName="email" pInputText placeholder="Enter new E-Mail address">
+      <div style="width: fit-content" class="ui-message ui-messages-error ui-corner-all" *ngIf="!emailform.controls['email'].valid&&emailform.controls['email'].dirty">
+        E-Mail Address is not valid
+      </div>
+    </div>
+
+    <div class="ui-g-12">
+      <div class="ui-g-4">Password:</div>
+      <input formControlName="password" type="password" pInputText placeholder="Enter Password">
+      <div style="width: fit-content" class="ui-message ui-messages-error ui-corner-all" *ngIf="!emailform.controls['password'].valid&&emailform.controls['password'].dirty">
+        Password is required
+      </div>
+    </div>
+
+    <div class="ui-g-12">
+      <button [disabled]="!emailform.valid"  type="submit" pButton icon="fa-check"  label="Submit"></button>
+    </div>
+    </div>
+  </form-->
+
+  <form [formGroup]="usernameform" (ngSubmit)="saveNewUsername(usernameform.value)">
+    <div class="ui-g">
+      <div class="ui-g-12" style="width:10px;"></div>
+
+      <div class="ui-g-12">
+        <h3>Change Username</h3>
+      </div>
+      <div class="ui-g-12">
+        <div class="ui-g-4">New Username:</div>
+        <input formControlName="username" pInputText placeholder="Enter new Username">
+        <div style="width: fit-content" class="ui-message ui-messages-error ui-corner-all" *ngIf="!usernameform.controls['username'].valid&&usernameform.controls['username'].dirty && asciiTest(usernameform.controls['username'].value)">
+         required
+        </div>
+        <div style="width: fit-content" class="ui-message ui-messages-error ui-corner-all" *ngIf="!asciiTest(usernameform.controls['username'].value)">
+          <div class="fa fa-info-circle"></div> Username must be at least 6 characters using A-Z, a-z, 0-9, and these characters: ! # $ % ' * + - . / = ? ^ _ &#123; &#125; !  ~ @
+         </div>
+      </div>
+      <div class="ui-g-12">
+        <div class="ui-g-4">Password:</div>
+        <input formControlName="password" type="password" pInputText placeholder="Enter Password">
+        <div style="width: fit-content" class="ui-message ui-messages-error ui-corner-all" *ngIf="!usernameform.controls['password'].valid&&usernameform.controls['password'].dirty">
+          Password is required
+        </div>
+      </div>
+      <div class="ui-g-12">
+        <button [disabled]="!usernameform.valid"  type="submit" pButton icon="fa-check"  label="Submit"></button>
+      </div>
+      </div>
+   </form>
+
+
+  <form [formGroup]="userfirstform" (ngSubmit)="saveNewFirstname(userfirstform.value)">
+      <div class="ui-g">
+        <div class="ui-g-12" style="width:10px;"></div>
+
+        <div class="ui-g-12">
+          <h3>Change Firstname</h3>
+        </div>
+
+        <div class="ui-g-12">
+          <div class="ui-g-4">New Firstname:</div>
+          <input formControlName="firstname" pInputText placeholder="Enter new Firstname">
+          <div style="width: fit-content" class="ui-message ui-messages-error ui-corner-all" *ngIf="!userfirstform.controls['firstname'].valid&&userfirstform.controls['firstname'].dirty">
+           required
+          </div>
+        </div>
+
+        <div class="ui-g-12">
+          <div class="ui-g-4">Password:</div>
+          <input formControlName="password" type="password" pInputText placeholder="Enter Password">
+          <div style="width: fit-content" class="ui-message ui-messages-error ui-corner-all" *ngIf="!userfirstform.controls['password'].valid&&userfirstform.controls['password'].dirty">
+            Password is required
+          </div>
+        </div>
+
+        <div class="ui-g-12">
+          <button [disabled]="!userfirstform.valid"  type="submit" pButton icon="fa-check"  label="Submit"></button>
+        </div>
+        </div>
+  </form>
+
+
+  <form [formGroup]="usersurform" (ngSubmit)="saveNewSurname(usersurform.value)">
+    <div class="ui-g">
+      <div class="ui-g-12" style="width:10px;"></div>
+
+      <div class="ui-g-12">
+            <h3>Change Lastname</h3>
+          </div>
+      <div class="ui-g-12">
+            <div class="ui-g-4">New Lastname:</div>
+            <input formControlName="surname" pInputText placeholder="Enter new Lastname">
+            <div style="width: fit-content" class="ui-message ui-messages-error ui-corner-all" *ngIf="!usersurform.controls['surname'].valid&&usersurform.controls['surname'].dirty">
+              required
+            </div>
+          </div>
+      <div class="ui-g-12">
+        <div class="ui-g-4">Password:</div>
+        <input formControlName="password" type="password" pInputText placeholder="Enter Password">
+        <div style="width: fit-content" class="ui-message ui-messages-error ui-corner-all" *ngIf="!usersurform.controls['password'].valid&&usersurform.controls['password'].dirty">
+              Password is required
+        </div>
+      </div>
+      <div class="ui-g-12">
+            <button [disabled]="!usersurform.valid"  type="submit" pButton icon="fa-check"  label="Submit"></button>
+      </div>
+    </div>
+  </form>
+
+  <p-footer>
+    <button class="ui-button-danger" type="button" pButton (click)="deleteAccountPopup = true" label="Delete Account"></button>
+    <button type="button" pButton icon="fa-close" (click)="userSettings=false;" label="Cancel"></button>
+  </p-footer>
+</p-dialog>
+
+<p-dialog *ngIf="dataloaded" header="Account deletion" [responsive]="true" [modal]=true appendTo="body" [width]="550"
+          [(visible)]="deleteAccountPopup">
+  <!--p-growl [(value)]="msgs"></p-growl-->
+  <div class="ui-g-12">
+  <span>You are about to delete your account. This can not be undone.</span><br>
+  <span>Please confirm with your password.</span>
+  </div>
+  <form [formGroup]="passwordform" >
+  <div class="ui-g-12">
+    <input formControlName="Password" pInputText type="password" placeholder="Enter password" type="password">
+  </div>
+  </form>
+  <p-footer>
+    <button [disabled]="!passwordform.valid" (click)="deleteAccount(passwordform.value)" class="ui-button-danger" type="button" pButton label="Delete"></button>
+    <button  (click)="deleteAccountPopup =false" class="ui-button-secondary" type="button" pButton label="Cancel"></button>
+  </p-footer>
+
+</p-dialog>
+
+<div *ngIf="dataloaded == true" style="display: table; width: max-content">
+ <div style="background: transparent; display: table-row">
+    <span style="font-size: 1.5em; display: table-row">{{ userBackend.username }}</span>
+    <span style="font-size:0.75em; display: table-row">{{ userBackend.email }}</span>
+    <span style="font-size:0.75em; display: table-row">{{ user.role.charAt(0).toUpperCase() + user.role.slice(1) }}</span>
+ </div>
+    <div style="display: table-row">
+      <span style="display: table-cell">
+        <button pButton type="button" icon="fa fa-pencil" (click)="this.userSettings = true;" label="Settings">
+      </button>
+      </span>
+      <span style="display: table-cell">
+          <button  (click)="logout()" icon="fa fa-sign-out" class="ui-button-primary" type="button" label="Logout" pButton></button>
+      </span>
+
+    </div>
+</div>
+
+<!-- Platz für mehrere Knöpfe in User Menü-->
+

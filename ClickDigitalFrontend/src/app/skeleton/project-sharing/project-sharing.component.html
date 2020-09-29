@@ -1,0 +1,36 @@
+<div id="siteWrapper" style="min-height: 100%; width: 100%; display: table;">
+  <div id="menuContainer">
+<main-menu></main-menu>
+  </div>
+
+  <div id="siteContainer">
+    <!-- Notifications-->
+    <div *ngIf="loginStatus > 0">
+    <div class="text ui-grid-row">
+    <p style="text-align: center">In this tool you're able to export a existing project.ts into enduser accounts.</p>
+    <p style="text-align: center">The enduser account must be created by the <strong>enduser</strong> because you should not able to see or set the password!</p>
+    <p style="text-align: center">Exporting a project to a enduser may <strong>overwrites</strong> existing exports in the enduser account.</p><br>
+    <p style="text-align: center">Please enter email of enduser account: </p>
+    </div>
+    <div style="text-align: center" class="ui-grid-row">
+    <div class="ui-inputgroup" style="margin: auto">
+      <input style="margin-left: auto" #email type="text" pInputText placeholder="Client E-Mail">
+      <button style="margin-right: auto" (click)="searchUser(email.value)" pButton type="button" label="Search"></button>
+    </div><br>
+    </div>
+    <div *ngIf="resultStatus">
+      <div class="text" style="text-align: center">
+      <p style="text-align: center">User <strong>{{ result }}</strong> found.</p>
+      <p style="text-align: center">Please choose project to export to {{ result }}</p>
+      </div>
+      <div style="text-align: center;">
+        <p-dropdown>
+        </p-dropdown>
+      </div>
+      <div *ngIf="selectedID>0">
+      <button pButton (click)="exportProject()">Export project.ts</button>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+@import "/../node_modules/primeng/resources/primeng.min.css";
+html {
+height: 100%;
+  width: 100%;
+}
+body {
+  background:lightgray;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1em;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+.ui-accordion .ui-accordion-header a { text-decoration : none !important; }
+a:-webkit-any-link {
+  text-decoration : none;
+}
+
+

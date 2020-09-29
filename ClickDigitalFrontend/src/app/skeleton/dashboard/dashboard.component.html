@@ -1,0 +1,69 @@
+<div id="siteWrapper" *ngIf="loginStatus > 0; else elseBlock">
+  <div id="menuContainer">
+    <main-menu (messageEvent)="notifyOfEvent($event)"></main-menu>
+  </div>
+
+  <div *ngIf="dataloaded" id="siteContainer">
+    <!-- Notifications-->
+    <p-growl [sticky]="false" [(value)]="msgs"></p-growl>
+    <!-- Dialog for confirmation messages-->
+    <p-confirmDialog></p-confirmDialog>
+
+    <div id="sidebar">
+      <app-sidebar-content></app-sidebar-content>
+    </div>
+    <p-dialog *ngIf="displayRuleCreationDialog && !displayRuleEditDialog"
+              header="Rule Creation" [(visible)]="displayRuleCreationDialog" [modal]="true" [responsive]="true"
+              [width]="window.innerWidth-200" [height]="window.innerHeight-600"
+              [contentStyle]="{'width':'100%','height':'100%'}" [minHeight]="window.innerHeight" [closable]="false">
+      <app-rule-creation rule_function="create"></app-rule-creation>
+    </p-dialog>
+    <p-dialog *ngIf="displayRuleEditDialog"
+              header="Rule Update" [(visible)]="displayRuleEditDialog" [modal]="true" [responsive]="true"
+              [width]="window.innerWidth-200"  [height]="window.innerHeight-600"
+
+              [contentStyle]="{'width':'100%','height':'100%'}" [minHeight]="window.innerHeight">
+      <app-rule-creation rule_function="edit" [rule]="editRule"></app-rule-creation>
+    </p-dialog>
+    <div *ngIf="dataloaded" id="mainContent">
+
+
+      <ng-container *ngFor="let dashboard of project.dashboards; trackBy: dashboardTrack()">
+        <ng-container *ngIf="dashboard.id === currentDashboardId">
+
+          <p-tabView id="tabView" [controlClose]="true" (onChange)="setActiveTab()"
+                     (onClose)="deleteConfirmation(currentSheetId)" orientation="bottom">
+
+            <ng-container id="tabPanelContainer"
+                          *ngFor="let sheet of dashboard.sheets; trackBy: trackSheet(); let i= index">
+
+              <p-tabPanel id={{sheet.id}} [header]="sheet.name"  [selected]="i == 0"> <!--[closable]="true"-->
+                <!--tabbody-->
+                <div class="middlecardSheet">
+                  <sheet-content style="{border: #7A7A7A 2em solid;}"
+                                 *ngIf="sheet.id === currentSheetId" (messageEvent)="notifyOfEvent($event)"></sheet-content>
+                </div>
+              </p-tabPanel>
+            </ng-container>
+          </p-tabView>
+          <!--
+          <p-button (click)="this.projectService.generateSheet()" style="position: fixed; right: 0.5em; bottom: 0.5em"
+                    icon="fa fa-plus"></p-button> -->
+
+        </ng-container>
+      </ng-container>
+    </div>
+
+  </div>
+</div>
+
+<!-- in case the user is not authorized to be here-->
+<ng-template #elseBlock>
+  <p-card title="Error!" [style]="{width: '360px'}" styleClass="ui-card-shadow">
+    <p>You're not authorized to be here. Maybe you just need to login? </p>
+    <p-footer>
+      <button pButton [routerLink]="['']">Login</button>
+    </p-footer>
+  </p-card>
+</ng-template>
+

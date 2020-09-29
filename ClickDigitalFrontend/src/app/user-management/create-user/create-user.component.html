@@ -1,0 +1,177 @@
+<script
+  src="../../../../../../Desktop/ClickDigital1.1.0/app/user-management/create-user/create-user.component.ts"></script>
+<p-growl [value]="msgs" [sticky]="true"></p-growl>
+
+<!--<img style="width: 35%; padding-bottom: 15px" src="assets/img/clickdigitallogo_white.svg">-->
+
+<div *ngIf="this.policyForm === null">
+	ERROR - Cannot connect to server
+</div>
+
+<form [formGroup]="userform" (ngSubmit)="checkUserInput(userform.value['email'], userform.value['username'], userform.value['password'], userform.value['passwordrepetition'], userform.value['firstname'], userform.value['lastname'], userform.value['role'])" *ngIf="this.currentPage == 0 && this.policyForm != null">
+  <div class="ui-g">
+    <div class="ui-g-12 vertical-align" style="margin-bottom: -10px;">
+      <div class="ui-g-2 textInputDescription">First name:</div>
+      <div class="ui-inputgroup ui-g-5">
+        <!--span style="background: transparent; border: none;" class="ui-inputgroup-addon"><i style="color: white" class="fa fa-user"></i></span-->
+        <input style="width:100%;" type="text" pInputText formControlName="firstname" placeholder="First name">
+      </div>
+      <div class="ui-g-5">
+        <div style="width: fit-content" class="ui-message ui-messages-error ui-corner-all" *ngIf="!userform.controls['firstname'].valid&&userform.controls['firstname'].dirty">
+          required
+        </div>
+      </div>
+    </div>
+    <div class="ui-g-12 vertical-align" style="margin-bottom: -10px;">
+      <div class="ui-g-2 textInputDescription">Last name:</div>
+      <div class="ui-inputgroup ui-g-5">
+        <!--span-- style="background: transparent; border: none;" class="ui-inputgroup-addon"><i style="color: white" class="fa fa-user"></i></span-->
+        <input style="width:100%;" type="text" pInputText formControlName="lastname" placeholder="Last name">
+      </div>
+      <div class="ui-g-5">
+        <div style="width: fit-content" class="ui-message ui-messages-error ui-corner-all" *ngIf="!userform.controls['lastname'].valid&&userform.controls['lastname'].dirty">
+          required
+        </div>
+      </div>
+    </div>
+    <div class="ui-g-12 vertical-align">
+      <div class="ui-g-2 textInputDescription">User name:</div>
+      <div class="ui-inputgroup ui-g-5">
+        <!--span style="background: transparent; border: none;" class="ui-inputgroup-addon"><i style="color: white" class="fa fa-user"></i></span-->
+        <input style="width:100%;" type="text" pInputText formControlName="username" placeholder="Username">
+      </div>
+      <div class="ui-g-5">
+        <div style="width: fit-content" class="ui-message ui-messages-error ui-corner-all" *ngIf="!userform.controls['username'].valid&&userform.controls['username'].dirty && asciiTest(userform.controls['username'].value)">
+          required
+        </div>
+        <div style="width: fit-content" class="ui-message ui-messages-error ui-corner-all" *ngIf="!asciiTest(userform.controls['username'].value)">
+         <div class="fa fa-info-circle"></div> Username must be at least 6 characters using A-Z, a-z, 0-9, and these characters: ! # $ % ' * + - . / = ? ^ _ &#123; &#125; !  ~ @>
+        </div>
+      </div>
+    </div>
+    <div class="ui-g-12 vertical-align" style="margin-bottom: -10px;">
+      <div class="ui-g-2 textInputDescription">Email address:</div>
+      <div class="ui-inputgroup ui-g-5">
+        <!--span style="background: transparent; border: none;" class="ui-inputgroup-addon"><i style="color: white" class="fa fa-envelope"></i></span-->
+        <input  style="width:100%;"type="email" pInputText formControlName="email" placeholder="E-Mail Address">
+      </div>
+      <div class="ui-g-5">
+        <div style="width: fit-content" class="ui-message ui-messages-error ui-corner-all" *ngIf="!userform.controls['email'].valid&&userform.controls['email'].dirty">
+          invalid email adress
+        </div>
+      </div>
+    </div>
+    <div class="ui-g-12 vertical-align" style="margin-bottom: -10px;">
+      <div class="ui-g-2 textInputDescription">Password:</div>
+      <div class="ui-inputgroup ui-g-5">
+        <!--span style="background: transparent; border: none;" class="ui-inputgroup-addon"><i style="color: white" class="fa fa-lock"></i></span-->
+        <input style="width:100%;" type="password" pInputText formControlName="password" placeholder="Password">
+      </div>
+      <div class="ui-g-5">
+        <div style="width: fit-content" class="ui-message ui-messages-error ui-corner-all" *ngIf="!userform.controls['password'].valid&&userform.controls['password'].dirty">
+          <span *ngIf="userform.controls['password'].errors['required']">required</span>
+          <span *ngIf="userform.controls['password'].errors['minlength']">password has to be longer</span>
+        </div>
+      </div>
+    </div>
+    <div class="ui-g-12 vertical-align" style="margin-bottom: -10px;">
+      <div class="ui-g-2 textInputDescription">Confirm password:</div>
+      <div class="ui-inputgroup ui-g-5">
+        <!--span style="background: transparent; border: none;" class="ui-inputgroup-addon"><i style="color: white" class="fa fa-lock"></i></span-->
+        <input style="width:100%;" type="password" pInputText formControlName="passwordrepetition" placeholder="Password repetition">
+      </div>
+      <div class="ui-g-5">
+        <div style="width: fit-content" class="ui-message ui-messages-error ui-corner-all" *ngIf="!userform.controls['passwordrepetition'].valid&&userform.controls['passwordrepetition'].dirty">
+          <span>non-matching passwords</span>
+        </div>
+      </div>
+    </div>
+    <div class="ui-g-12 vertical-align" style="margin-bottom: -10px;">
+      <div class="ui-g-2 textInputDescription">Role:</div>
+      <div class="ui-g-5 ui-fluid">
+        <p-dropdown placeholder="Select a role" [options]="role" formControlName="role" [autoWidth]="false"></p-dropdown>
+      </div>
+      <div class="ui-g-5">
+        <div style="width: fit-content" class="ui-message ui-messages-error ui-corner-all" *ngIf="!userform.controls['role'].valid&&userform.controls['role'].dirty">
+          required
+        </div>
+      </div>
+    </div>
+    <div *ngIf="this.dropdown != null && this.dropdown.selectedOption !== null && this.dropdown.selectedOption.value === ROLEDEVELOPER" class="ui-g-12 vertical-align">
+      <div class="ui-g-2 textInputDescription">PIN:</div>
+      <div class="ui-inputgroup ui-g-5">
+        <!--span style="background: transparent; border: none;" class="ui-inputgroup-addon"><i style="color: white" class="fa fa-key"></i></span-->
+        <input pInputText type="password" placeholder="PIN" [(ngModel)]="pin" [ngModelOptions]="{standalone: true}" required>
+      </div>
+      <div class="ui-g-5">
+        <div style="width: fit-content" class="ui-message ui-messages-error ui-corner-all" *ngIf="!userform.controls['role'].valid&&userform.controls['role'].dirty">
+          required
+        </div>
+      </div>
+    </div>
+    <div class="ui-g-12" style="margin-bottom: -10px;">
+      <div class="ui-g-6">
+        <button pButton style = "background-color: #297E60; border: none; text-color: #FFFFFF;" type="submit" label="Continue to Privacy Policies" [disabled]="!userform.valid"></button>
+      </div>
+    </div>
+  </div>
+</form>
+
+
+	<form [formGroup]="policyForm" (ngSubmit)="createUser(policyForm.value)" *ngIf="this.currentPage == 1 && this.policyForm != null">
+		<div *ngFor="let currID of sequenceList; let i=index">
+			<div class="vertical-align">
+				<p-fieldset [toggleable]="true" [collapsed]="true">
+					<p-header>
+						<div style="border: none" class="ui-message" *ngIf="policyForm.controls[currID].valid">
+							{{availableElements[currID].title}}
+							<div style="border: none" class="ui-message" *ngIf="!availableElements[currID].consentRequired">
+								[OPTIONAL]
+							</div>
+						</div>
+						<div style="border: none; color: red; font-weight: bold;" class="ui-message" *ngIf="!policyForm.controls[currID].valid">
+							<i style="color: red" class="fa fa-exclamation-circle "></i>
+							{{availableElements[currID].title}}
+							<br/>
+						</div>
+					</p-header>
+					<div style="width: 700px;">
+						{{availableElements[currID].descriptions.before}}
+						<div *ngFor="let child of availableElements[currID].children; let i=index">
+							<p-fieldset>
+								<p-header>
+									<div style="border: none" class="ui-message"  *ngIf="policyForm.controls[child.id].valid">
+										{{availableElements[child.id].title}}
+										<div style="border: none" class="ui-message" *ngIf="!availableElements[child.id].consentRequired">
+											<i>[OPTIONAL]</i>
+										</div>
+									</div>
+									<div style="border: none; color: red; font-weight: bold;" class="ui-message" *ngIf="!policyForm.controls[child.id].valid">
+										<i style="color: red" class="fa fa-exclamation-circle "></i> {{availableElements[child.id].title}}<br/>
+									</div>
+								</p-header>
+								<div style="width: 600px;">
+									{{child.descriptions.before}}
+								</div>
+								<div class="ui-g-25">
+									<p-checkbox label="{{child.descriptions.submit}}" [formControl]="policyForm.controls[child.id]" binary="true"></p-checkbox>
+								</div>
+							</p-fieldset>
+						</div>
+						{{availableElements[currID].descriptions.after}}
+						<div class="ui-g-25">
+							<p-checkbox label="{{availableElements[currID].descriptions.submit}}" [formControl]="policyForm.controls[currID]" binary="true"></p-checkbox>
+						</div>
+					</div>
+				</p-fieldset>
+			</div>
+		</div>
+    <div style="text-align: center; padding-bottom: 20px;">
+      By clicking "Submit", you accept our policies.
+    </div>
+		<div style="text-align: center;">
+			<button pButton (click)="this.currentPage = 0" type="button" label="Back" style="margin-right: 5px;background-color: #297e60; border: none;"></button>
+			<button pButton type="submit" label="Submit" style="background-color: #297E60; border: none;" [disabled]="policyForm.invalid"></button>
+		</div>
+	</form>
+

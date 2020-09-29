@@ -1,0 +1,212 @@
+<p-growl [sticky]="false" [(value)]="this.msgs"></p-growl>
+<p-dialog header="Privacy Settings" [modal]=true appendTo="body" [width]="550" [(visible)]="privacySettings">
+
+  <form [formGroup]="policyForm" (ngSubmit)="saveSettings(policyForm.value)" *ngIf="policyForm != null">
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <h3>Change privacy settings</h3>
+      </div>
+
+      <div *ngFor="let currID of sequenceList; let i=index">
+        <div style="width: 475px;">
+          <p-fieldset [toggleable]="true" [collapsed]="true">
+            <p-header>
+              <div style="border:none" class="ui-message" *ngIf="policyForm.controls[currID].valid">
+                {{availableElements[currID].title}}
+                <div style="border:none" class="ui-message" *ngIf="!availableElements[currID].consentRequired">
+                  [OPTIONAL]
+                </div>
+              </div>
+              <div style="border:none; color: red; font-weight: bold;" class="ui-message" *ngIf="!policyForm.controls[currID].valid">
+                <i style="color:red" class="fa fa-exclamation-circle"></i>
+                {{availableElements[currID].title}} <br/>
+              </div>
+            </p-header>
+
+            <div class="ui-g-12">
+              <p>
+                {{availableElements[currID].descriptions.before}}
+              </p>
+              <div *ngFor="let child of availableElements[currID].children; let i=index">
+                <div style="width: 400px;">
+                  <p-fieldset [toggleable]="true" [collapsed]="true">
+                    <p-header>
+                      <div style="border: none" class="ui-message" *ngIf="policyForm.controls[child.id].valid">
+                        {{child.title}}
+                        <div style="border: none" class="ui-message" *ngIf="!child.consentRequired">
+                          [OPTIONAL]
+                        </div>
+                      </div>
+                      <div style="border: none; color: red; font-weight: bold;" class="ui-message" *ngIf="!policyForm.controls[child.id].valid">
+                        <i style="color: red" class="fa fa-exclamation-circle"></i>
+                        {{child.title}} <br/>
+                      </div>
+                    </p-header>
+                    <div class="ui-g-12">
+                      <p>
+                        {{child.descriptions.before}}
+                      </p>
+                    </div>
+                    <div class="ui-g-12">
+                      <p-checkbox label="{{child.descriptions.submit}}" [formControl]="policyForm.controls[child.id]"
+                                  binary="true"></p-checkbox>
+                    </div>
+
+                    <div class="ui-g-5">
+                      <div style="width: fit-content" class="ui-message ui-messages-error ui-corner-all"
+                           *ngIf="child.validFrom.getTime() > currTime && child.consentRequired && !policyForm.controls[child.id].value">
+                        required till {{child.validFrom.getDate()}}.{{child.validFrom.getMonth() + 1}}.{{child.validFrom.getFullYear()}}
+                      </div>
+                    </div>
+
+                  </p-fieldset>
+                </div>
+                <br>
+              </div>
+              <p>
+                {{availableElements[currID].descriptions.after}}
+              </p>
+              <div class="ui-g-12">
+                <p-checkbox label="{{availableElements[currID].descriptions.submit}}"
+                            [formControl]="policyForm.controls[currID]" binary="true"></p-checkbox>
+              </div>
+            </div>
+          </p-fieldset>
+          <div class="ui-g-5">
+            <div style="width: fit-content" class="ui-message ui-messages-error ui-corner-all"
+                 *ngIf="availableElements[currID].validFrom.getTime() > currTime && availableElements[currID].consentRequired && !policyForm.controls[currID].value">
+              required till {{availableElements[currID].validFrom.getDate()}}.{{availableElements[currID].validFrom.getMonth() + 1}}.{{availableElements[currID].validFrom.getFullYear()}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ui-g-4"></div>
+      <div class="ui-g-4">
+        <button pButton type="submit" label="Submit" [disabled]="policyForm.invalid"></button>
+      </div>
+      <div class="ui-g-4"></div>
+    </div>
+  </form>
+</p-dialog>
+
+
+
+<p-dialog header="Changed Terms of Use" [modal]=true [closeOnEscape]="false" [closable]="false"
+          appendTo="body" [width]="550" [(visible)]="popup">
+  <form [formGroup]="this.policyFormPopup" (ngSubmit)="this.editPartOfSettings(policyFormPopup.value)" *ngIf="this.policyFormPopup != null">
+    <div class="ui-g">
+      <div class="ui-g-12">
+        The terms of use have changed, if you want to continue using this service you have to accept the new terms.
+        Otherwise you have to delete your account.
+      </div>
+      <div class="ui-g-12">
+
+        <div *ngFor="let elem of this.uncheckedElements; let i=index">
+          <div style="width: 475px;">
+            <p-fieldset [toggleable]="true">
+              <p-header>
+                <div style="border:none" class="ui-message" *ngIf="policyFormPopup.controls[elem.id].valid">
+                  {{elem.title}}
+                </div>
+                <div style="border:none; color: red; font-weight: bold;" class="ui-message" *ngIf="!policyFormPopup.controls[elem.id].valid">
+                  <i style="color:red" class="fa fa-exclamation-circle"></i>
+                  {{elem.title}} <br/>
+                  <div style="border: none" class="ui-message" *ngIf="!elem.consentRequired">
+                    [OPTIONAL]
+                  </div>
+                </div>
+              </p-header>
+              <div class="ui-g-12">
+                <p>
+                  {{elem.descriptions.before}}
+                </p>
+                <div *ngFor="let child of elem.children; let i=index">
+                  <div style="width: 400px;">
+                    <p-fieldset>
+                      <p-header>
+                        <div style="border:none" class="ui-message" *ngIf="policyFormPopup.controls[child.id].valid">
+                          {{child.title}}
+                          <div style="border: none" class="ui-message" *ngIf="!child.consentRequired">
+                            [OPTIONAL]
+                          </div>
+                        </div>
+                        <div style="border:none; color: red; font-weight: bold;" class="ui-message" *ngIf="!policyFormPopup.controls[child.id].valid">
+                          <i style="color:red" class="fa fa-exclamation-circle"></i>
+                          {{child.title}} <br/>
+                        </div>
+
+                      </p-header>
+                      <div class="ui-g-12">
+                        <p>
+                          {{child.descriptions.before}}
+                        </p>
+                      </div>
+                      <div class="ui-g-12">
+                        <p-checkbox label="{{child.descriptions.submit}}" [formControl]="this.policyFormPopup.controls[child.id]"
+                                    binary="true"></p-checkbox>
+                      </div>
+
+                    </p-fieldset>
+                  </div>
+                  <br>
+                </div>
+                <p>
+                  {{elem.descriptions.after}}
+                </p>
+                <div class="ui-g-12">
+                  <p-checkbox label="{{elem.descriptions.submit}}"
+                              [formControl]="this.policyFormPopup.controls[elem.id]" binary="true"></p-checkbox>
+                </div>
+              </div>
+            </p-fieldset>
+          </div>
+        </div>
+
+      </div>
+      <p-footer>
+        <button pButton type="submit" label="Submit" [disabled]="policyFormPopup.invalid" (click)="editPartOfSettings(policyFormPopup)"></button>
+        <button (click)="this.deleteAccountPopup = true" class="ui-button-danger" type="button" pButton label="Delete Account"></button>
+      </p-footer>
+    </div>
+  </form>
+</p-dialog>
+
+<p-dialog header="Account deletion" [responsive]="true" [modal]=true appendTo="body" [width]="550"
+          [(visible)]="deleteAccountPopup">
+  <p-growl [(value)]="msgs"></p-growl>
+  <div class="ui-g-12">
+    <span>You are about to delete your account. This can not be undone.</span><br>
+    <span>Please confirm with your password.</span>
+  </div>
+  <form [formGroup]="passwordForm" >
+    <div class="ui-g-12">
+      <input formControlName="Password" pInputText placeholder="Enter password" type="password">
+    </div>
+
+  <p-footer>
+    <button [disabled]="!passwordForm.valid" (click)="deleteAccount(passwordForm.value)" class="ui-button-danger" type="button" pButton label="Delete"></button>
+    <button  (click)="deleteAccountPopup =false" class="ui-button-secondary" type="button" pButton label="Cancel"></button>
+  </p-footer>
+  </form>
+</p-dialog>
+
+<p-dialog header="Reminder" appendTo="body" [width]="550" [(visible)]="reminderPopup">
+  <div class="ui-g-12">
+    You haven't agreed to our new terms of use. Check the Privacy Settings to view the new terms.<br/>
+    If you don't want to agree to the new terms till the given date in the Privacy Settings, you will have to delete your account.<br/>
+    <br/>
+  </div>
+  <div class="ui-g-12">
+    The new terms consist of:
+    <ul>
+      <div *ngFor="let title of remindElements">
+        <li>
+          {{title}}
+        </li>
+      </div>
+    </ul>
+  </div>
+  <p-footer>
+    <button  (click)="showSettings(); reminderPopup = false" class="ui-button" type="button" pButton label="Open Privacy Settings"></button>
+  </p-footer>
+</p-dialog>

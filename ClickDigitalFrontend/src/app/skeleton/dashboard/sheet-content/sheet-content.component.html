@@ -1,0 +1,129 @@
+<gridster  #dashboardgrid [options]="options" class="widget-container" >
+        <!--gridster-item *ngFor="let widget of list" id="widget.id" [id]="widget.id" (click)="getCurrentWidget();" (mouseup)="enablePointer(widget.id)" [item]="widget.position" class="gridster-design drag-handler">
+          <p-card class="gridster-item-content" styleClass="ui-card-shadow">
+
+
+            <button pButton icon="fa fa-pencil" [hidden]="!(loginStatus > 1 && !widget.isDeveloped)" (mousedown)="$event.stopPropagation()" (touchstart)="$event.stopPropagation()" (click)="widget.isDeveloped = !widget.isDeveloped;" class="tbutton transparentButton dev-button ui-button-secondary">
+            </button>
+
+            <button pButton icon="fa fa-eye" [hidden]="!(loginStatus > 1 && widget.isDeveloped)" (mousedown)="$event.stopPropagation()" (touchstart)="$event.stopPropagation()" (click)="widget.isDeveloped = !widget.isDeveloped;" class="tbutton transparentButton dev-button ui-button-secondary">
+            </button>
+
+            <button pButton="delete" icon="fa fa-trash" [hidden]="!(loginStatus>1 && widget.isDeveloped)" (mousedown)="$event.stopPropagation()" (touchstart)="$event.stopPropagation()" (click)="deleteWidget(widget.id)"
+                    class="delete-button tbutton transparentButton ui-button-secondary">
+            </button>
+
+            <div [ngSwitch]="widget.type" style="height:100%; width:100%;">
+              <div *ngSwitchCase="widgetType.sliderDeviceControl" class="widget-content" style="width:100%;margin: 0 auto;">
+                <slider-control-device style= "height: 100%; width:100%;" [currentWidget]="widget"></slider-control-device>
+              </div>
+              <div *ngSwitchCase="widgetType.toggleDeviceControl" class="widget-content" style="width:100%; margin: 0 auto;">
+                <toggle-control-device style= "height: 100%; width:100%;" [currentWidget]="widget"></toggle-control-device>
+              </div>
+              <div *ngSwitchCase="widgetType.stateDeviceControl" class="widget-content" style="width:100%; margin: 0 auto;">
+                <state-control-device style= "height: 100%; width:100%;" [currentWidget]="widget"></state-control-device>
+              </div>
+              <div *ngSwitchCase="widgetType.realtimeValueVisualization" class="widget-content" style="width:100%; margin: 0 auto;">
+                <realtime-value-visualization style= "height: 100%; width:100%;" [currentWidget]="widget" (resizeFont)="handleResizeFont($event)"></realtime-value-visualization>
+              </div>
+
+              <div *ngSwitchDefault class="widget-content">
+                <input pInputText *ngIf="widget.isDeveloped" class="gridster-item-content" [(ngModel)]="widget.name" placeholder="name"  style="width: 80%;" (ngModelChange)="saveInDatabase(widget.id, $event, 'name')">
+                <h3 class="gridster-item-content" *ngIf="!widget.isDeveloped" style="margin: 0;">{{widget.name}}</h3>
+
+                <bar-chart-visualization style= "height: 100%; width:100%;" [currentWidget]="widget" (resizeFont)="handleResizeFont($event)" *ngIf="widget.type === widgetType.barChartVisualization"></bar-chart-visualization>
+                <chart-visualization style= "height: 100%; width:100%;" [currentWidget]="widget" (resizeFont)="handleResizeFont($event)" *ngIf="widget.type === widgetType.lineChartVisualization"></chart-visualization>
+                <history-anomaly style= "height: 100%; width:100%;" [currentWidget]="widget" (resizeFont)="handleResizeFont($event)" *ngIf="widget.type === widgetType.historyAnomaly"></history-anomaly>
+                <realtime-anomaly style= "height: 100%; width:100%;" [currentWidget]="widget" (resizeFont)="handleResizeFont($event)" *ngIf="widget.type === widgetType.realtimeAnomaly"></realtime-anomaly>
+                <app-add-device style= "height: 100%; width:100%;"[currentWidget]="widget" *ngIf="widget.type === widgetType.addDevice"></app-add-device>
+                <app-delete-device style= "height: 100%; width:100%;"[currentWidget]="widget" *ngIf="widget.type === widgetType.deleteDevice"></app-delete-device>
+
+                <div *ngIf="widget.type === widgetType.ruleManagementView" class="widget-content" style="width:100%; margin: 0 auto;">
+                  <br>
+                  <app-rule-management style= "height: 100%; width: 100%;" [currentWidget]="widget" ></app-rule-management>
+                </div>
+                <div *ngIf="widget.type === widgetType.ruleNotificationView" class="widget-content" style="width:100%; margin: 0 auto;">
+                  <br>
+                  <app-rule-notification style= "height: 100%; width: 100%;" [currentWidget]="widget" ></app-rule-notification>
+                </div>
+                <div *ngIf="widget.type === widgetType.ruleSharingViewWidget"  class="widget-content" style="width:100%; margin: 0 auto;">
+                  <app-rule-sharing style= "height: 100%; width: 100%;" ></app-rule-sharing>
+                </div>
+
+              </div>
+            </div>
+          </p-card>
+        </gridster-item-->
+
+  <gridster-item *ngFor="let widget of list" id="widget.id" [id]="widget.id" [item]="widget.position" class="gridster-design" (mouseup)="enablePointer(widget.id)" style="word-break: break-all;">
+    <p-card  styleClass="ui-card-shadow" >
+      <!-- toggle developermode button-->
+
+      <button pButton icon="fa fa-pencil" [hidden]="!(loginStatus > 1 && !widget.isDeveloped)" (mousedown)="$event.stopPropagation()"
+              (touchstart)="$event.stopPropagation()" (click)="widget.isDeveloped = !widget.isDeveloped;"
+              class="gridster-item-content tbutton transparentButton dev-button ui-button-secondary">
+      </button>
+
+      <button pButton icon="fa fa-eye" [hidden]="!(loginStatus > 1 && widget.isDeveloped)" (mousedown)="$event.stopPropagation()"
+              (touchstart)="$event.stopPropagation()" (click)="changeDeveloperMode(widget);"
+              class="gridster-item-content tbutton transparentButton dev-button ui-button-secondary">
+      </button>
+
+      <!-- delete button-->
+      <button pButton="delete" icon="fa fa-trash" [hidden]="!(loginStatus>1 && widget.isDeveloped)" (mousedown)="$event.stopPropagation()" (touchstart)="$event.stopPropagation()" (click)="deleteWidget(widget.id)"
+              class="gridster-item-content delete-button tbutton transparentButton ui-button-secondary">
+      </button>
+
+      <!-- changes the widget content -->
+
+      <div [ngSwitch]="widget.type" style="height:100%; width:100%;">
+        <div *ngSwitchCase="widgetType.sliderDeviceControl" class="widget-content" style="width:100%;margin: 0 auto;">
+          <slider-control-device style= "height: 100%; width:100%;" [currentWidget]="widget"></slider-control-device>
+        </div>
+        <div *ngSwitchCase="widgetType.toggleDeviceControl" class="widget-content" style="width:100%; margin: 0 auto;">
+          <toggle-control-device style= "height: 100%; width:100%;" [currentWidget]="widget"></toggle-control-device>
+        </div>
+        <div *ngSwitchCase="widgetType.stateDeviceControl" class="widget-content" style="width:100%; margin: 0 auto;">
+          <state-control-device style= "height: 100%; width:100%;" [currentWidget]="widget"></state-control-device>
+        </div>
+        <div *ngSwitchCase="widgetType.realtimeValueVisualization" class="widget-content" style="width:100%; margin: 0 auto;">
+          <realtime-value-visualization style= "height: 100%; width:100%;" [currentWidget]="widget" (resizeFont)="handleResizeFont($event)"></realtime-value-visualization>
+        </div>
+        <!--<div *ngSwitchCase="widgetType.historyAnomaly" class="widget-content" style="width:100%; margin: 0 auto;">-->
+        <!--<history-anomaly style= "height: 100%; width:100%;" [currentWidget]="widget"></history-anomaly>-->
+        <!--</div>-->
+
+        <div *ngSwitchDefault class="widget-content">
+          <input pInputText *ngIf="widget.isDeveloped" class="gridster-item-content" [(ngModel)]="widget.name" placeholder="name"  style="width: 80%; " (ngModelChange)="saveInDatabase(widget.id, $event, 'name')">
+          <h3 class="gridster-item-content" *ngIf="!widget.isDeveloped" style="margin: 0; ">{{widget.name}}</h3>
+          <!-- select device -->
+          <bar-chart-visualization style= "height: 100%; width:100%;" [currentWidget]="widget" (resizeFont)="handleResizeFont($event)" *ngIf="widget.type === widgetType.barChartVisualization"></bar-chart-visualization>
+          <doughnut-chart-visualization style= "height: 100%; width:100%;" [currentWidget]="widget" (resizeFont)="handleResizeFont($event)" *ngIf="widget.type === widgetType.doughnutChartVisualization"></doughnut-chart-visualization>
+          <polar-area-chart-visualization style= "height: 100%; width:100%;" [currentWidget]="widget" (resizeFont)="handleResizeFont($event)" *ngIf="widget.type === widgetType.polarAreaChartVisualization"></polar-area-chart-visualization>
+          <bubble-chart-visualization style= "height: 100%; width:100%;" [currentWidget]="widget" (resizeFont)="handleResizeFont($event)" *ngIf="widget.type === widgetType.bubbleChartVisualization"></bubble-chart-visualization>
+          <chart-visualization style= "height: 100%; width:100%;" [currentWidget]="widget" (resizeFont)="handleResizeFont($event)" *ngIf="widget.type === widgetType.lineChartVisualization"></chart-visualization>
+          <history-anomaly style= "height: 100%; width:100%;" [currentWidget]="widget" (resizeFont)="handleResizeFont($event)" *ngIf="widget.type === widgetType.historyAnomaly"></history-anomaly>
+          <realtime-anomaly style= "height: 100%; width:100%;" [currentWidget]="widget" (resizeFont)="handleResizeFont($event)" *ngIf="widget.type === widgetType.realtimeAnomaly"></realtime-anomaly>
+          <app-add-device style= "height: 100%; width:100%;"[currentWidget]="widget" *ngIf="widget.type === widgetType.addDevice"></app-add-device>
+          <app-delete-device style= "height: 100%; width:100%;"[currentWidget]="widget" *ngIf="widget.type === widgetType.deleteDevice"></app-delete-device>
+          <!-- rule widgets -->
+          <div *ngIf="widget.type === widgetType.ruleManagementView" class="widget-content" style="width:100%; margin: 0 auto;">
+            <br>
+            <app-rule-management style= "height: 100%; width: 100%;" [currentWidget]="widget" (messageEvent)="forwardMsgToDashboardComponent($event)"></app-rule-management>
+          </div>
+          <div *ngIf="widget.type === widgetType.ruleNotificationView" class="widget-content" style="width:100%; margin: 0 auto;">
+            <br>
+            <app-rule-notification style= "height: 100%; width: 100%;" [currentWidget]="widget" ></app-rule-notification>
+          </div>
+          <div *ngIf="widget.type === widgetType.ruleSharingViewWidget"  class="widget-content" style="width:100%; margin: 0 auto;">
+            <app-rule-sharing style= "height: 100%; width: 100%;" ></app-rule-sharing>
+          </div>
+          <!-- end rule widgets -->
+        </div>
+      </div>
+    </p-card>
+  </gridster-item>
+
+</gridster>
+
+

@@ -1,0 +1,65 @@
+<div id="siteWrapper" style="min-height: 100%; width: 100%; display: table;">
+  <div id="menuContainer">
+    <main-menu></main-menu>
+  </div>
+
+  <div id="siteContainer">
+<!-- Iot Platform Verwaltungsseite -->
+  <p-confirmDialog [closable]="false"></p-confirmDialog>
+  <p-dialog [modal]="true" header="Connect a Platform" [(visible)]="displayEdit" [closable]="false">
+    <div class="center">
+      <div class="ui-message ui-messages-info ui-corner-all"><i class="fa fa-info-circle" aria-hidden="true"></i> If you want to add a new platform over Aiotes, please make sure that the ip adress of Aiotes is configured in the config-file.</div>
+      <p>Please select the platform you want to add:</p>
+      <p-dropdown [autoWidth]="true"
+                  [style]="{'width': '100%'}" [options]="allPlatforms" placeholder="Select a Platform" [(ngModel)]="selectedPlatform"></p-dropdown>
+      <p>Please enter the connection data for the platform:</p>
+
+        <input type="text" style="margin-bottom : 0.9em;" size="20" pInputText [(ngModel)]="name" placeholder = 'Name'>
+   <br>
+        <input type="text" style="margin-bottom : 0.9em;" size="20" pInputText [(ngModel)]="ip" placeholder = 'IP Adress'>
+      <br>
+         <input type="number" style="margin-bottom : 0.9em;" size="20" pInputText [(ngModel)]="port" placeholder = 'Port'>
+       <!--<br><input type="text" style="margin-bottom : 0.9em;" size="20" pInputText [(ngModel)]="username" placeholder = 'Username'>
+     <br>
+        <input type="password" style="margin-bottom : 0.9em;" size="20" pInputText [(ngModel)]="password" placeholder = 'Password'>-->
+
+    </div>
+    <p-footer>
+      <button type="button" pButton icon="fa-check" (click)="addPlatform();" label="Connect"></button>
+      <button type="button" pButton icon="fa-close" (click)="displayEdit=false;" label="Cancel"></button>
+    </p-footer>
+  </p-dialog>
+   <div style="padding: 5px;">
+  <h3>Setup Aiotes Bridge to SIL</h3>
+     <input type="text" style="margin-bottom : 0.9em; margin-right: 0.9em;" size="20" pInputText [(ngModel)]="systemIp" placeholder = 'Local System IP Adress'>
+     <input type="number" style="margin-bottom : 0.9em; margin-right: 0.9em;" size="20" pInputText [(ngModel)]="clickdigitalPort" placeholder = 'Local ClickDigital Port'>
+    <input type="text" style="margin-bottom : 0.9em; margin-right: 0.9em;" size="20" pInputText [(ngModel)]="bridgeIp" placeholder = 'Aiotes IP Adress'>
+    <input type="number" style="margin-bottom : 0.9em; margin-right: 0.9em;" size="20" pInputText [(ngModel)]="bridgePort" placeholder = 'Aiotes Port'>
+    <p-button style="padding-top: 0.5em;" *ngIf="loginStatus > 0" label = "Connect to Aiotes" (onClick)="changeBridge()">
+    </p-button>
+    <h3>Platforms</h3>
+    <div *ngIf=" connectedPlatforms.length != 0;">
+       <p-accordion [multiple]="true">
+        <div *ngFor="let platform of connectedPlatforms">
+          <p-accordionTab  style="align-items: center; overflow: auto;">
+            <p-header>
+                  {{ platform['name'] }}
+              <span style=" position: absolute; right: 0;">
+                <p-button *ngIf="loginStatus > 0"  icon="fa fa-pencil-square-o" (onClick)="showEditDialog()">
+                  </p-button>
+                <p-button *ngIf="loginStatus > 0" icon="fa fa-trash"  (onClick)="deletePlatform(platform)">
+                  </p-button>
+              </span>
+            </p-header>
+           <p>IP: {{ platform['ip'] }}</p>
+           <p> Username : {{ platform['username'] }}</p>
+         </p-accordionTab>
+        </div>
+       </p-accordion>
+    </div>
+    <p-button style="padding-top: 0.5em;" *ngIf="loginStatus > 0"  icon="fa fa-plus" label = "New Platform" (onClick)="showEditDialog()">
+    </p-button>
+   </div>
+
+  </div>
+</div>

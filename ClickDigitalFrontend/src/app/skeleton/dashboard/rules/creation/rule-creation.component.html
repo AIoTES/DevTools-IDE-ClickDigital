@@ -1,0 +1,186 @@
+<p-growl [(value)]="messeges" life="4000"></p-growl>
+<div class="ui-g rule_creation">
+  <div class="ui-lg-12 ui-md-12">
+        <span class="ui-float-label rule_name">
+        <div class="first rule_creation_label">Name</div>
+        <input id="float-input-name" type="text" [(ngModel)]="creationRule.name" pInputText
+               >
+       </span>
+  </div>
+  <div class="ui-lg-12 ui-md-12">
+      <span class="ui-float-label rule_name" size="200">
+        <div class="first rule_creation_label">Description</div>
+        <input id="float-input-description" type="text" [(ngModel)]="creationRule.description" pInputText>
+       </span>
+  </div>
+  <div class="ui-lg-12 ui-md-12 activation">
+    <div class="first rule_creation_label">
+      <span>Rule Notification</span>
+    </div>
+    <p-inputSwitch [(ngModel)]="creationRule.notify"></p-inputSwitch>
+  </div>
+  <div class="ui-lg-12 ui-md-12 activation">
+    <div class="first rule_creation_label">
+      <span>Rule Activation</span>
+    </div>
+    <p-inputSwitch [(ngModel)]="creationRule.active"></p-inputSwitch>
+
+  </div>
+  <div class="ui-lg-10 ui-md-10 description-border rule_creation_padding">
+    <p-dropdown [options]="projects"
+                [(ngModel)]="creationRule.projectID"
+                (onClick)="projectSelected(creationRule.projectID);"
+                placeholder="Select Project"   [style]="{'width':'250px', 'margin-right':'10px'}"></p-dropdown>
+    <p-dropdown [options]="platforms"
+                [(ngModel)]="creationRule.platformID"
+                (onClick)="addAllDevices(creationRule.platformID)"
+                placeholder="Select platform" [style]="{'width':'250px'}"></p-dropdown>
+  </div>
+  <div class="ui-lg-2 ui-md-2 description-border">
+    <button pButton type="button" *ngIf="rule_function !== 'edit'" class="rule_create_button ui-button-secondary" label="Cancel"
+            (click)="closeRuleCreationDisplay()"></button>
+    <button pButton type="button" *ngIf="rule_function === 'edit'" class="rule_create_button ui-button-secondary" label="Cancel"
+            (click)="closeRuleUpdateDisplay()"></button>
+
+
+    <p-splitButton label="Save" *ngIf="rule_function === 'create'"
+                   menuStyleClass="operatorMenu"
+                   class="rule_create_button"
+                   (onClick)="saveTriggerAndRule(true);"
+                   [model]="saveRuleLables">
+    </p-splitButton>
+    <p-splitButton label="Update" *ngIf="rule_function === 'edit'"
+                   menuStyleClass="operatorMenu"
+                   class="rule_create_button"
+                   (onClick)="updateTriggerAndRule(true);"
+                   [model]="updateRuleLables">
+    </p-splitButton>
+  </div>
+  <div class="ui-lg-6 ui-md-6 condition_action_title conditions">
+    <strong>If: add one or more conditions</strong>
+    <br>
+    <p-scrollPanel [style]="{height: '90%', backgroundColor:'transparent', borderColor:'transparent'}">
+      <div class="ui-lg-12 ui-md-12 conditions-body" id="conditions">
+        <div *ngFor="let trigger of triggerList; let triggerIndex = index"  [ngClass]="{'last_distance': triggerIndex === triggerList.length - 1}"
+             (drop)="drop($event,triggerIndex)"
+             draggable="true"
+             (dragstart)="drag($event,triggerList[triggerIndex],selectedOperatorList[triggerIndex-1],triggerIndex)"
+             (dragover)="allowDrop($event)">
+          <p-card [style]="{width:'96%'}">
+            <div>{{ trigger.name }}</div>
+            <p-header>
+
+              <button pButton type="button" icon="fa fa-trash" class="remove-button ui-button-secondary" iconPos="right"
+                      (click)="removeTriggerOnlyThisRule(trigger,triggerIndex,removeTriggerOverlay,$event);"></button>
+              <p-overlayPanel #removeTriggerOverlay [appendTo]="'body'">
+                <h4> This condition can be used in another rule. </h4>
+                <h4> Do you want to remove for all rules ? </h4>
+                <button pButton type="button" label="Remove all" (click)="removeTriggerForAllRules(trigger,triggerIndex,removeTriggerOverlay,$event);"></button>
+                <button pButton type="button" label="Remove only this rule" (click)="removeTriggerOnlyThisRule(trigger,triggerIndex,removeTriggerOverlay,$event);" ></button>
+              </p-overlayPanel>
+              <button *ngIf="rule_function === 'edit'" pButton type="button" icon="fa fa-edit" class="remove-button ui-button-secondary" iconPos="right"
+                      (click)="editTriggerOnlyThisRule(trigger,triggerIndex,editIconOverlay,updateTriggerOverlay,$event);"></button>
+              <p-overlayPanel #editIconOverlay [appendTo]="'body'">
+                <h4> This condition can be used in another rule. </h4>
+                <h4> Do you want to edit for all rules ? </h4>
+                <button pButton type="button" label="Edit all" (click)="editTriggerForAllRules(trigger,triggerIndex,editIconOverlay,updateTriggerOverlay,$event);"></button>
+                <button pButton type="button" label="Edit only this rule" (click)="editTriggerOnlyThisRule(trigger,triggerIndex,editIconOverlay,updateTriggerOverlay,$event);" ></button>
+              </p-overlayPanel>
+              <p-overlayPanel #updateTriggerOverlay [appendTo]="'body'"
+                              [style]="{ 'border': '2px solid rgb(35, 153, 229)','background-color' : 'rgb(224, 224, 224)', 'padding-top' :'8px','padding-bottom' :'8px'}">
+                <p-accordion [multiple]="true"  [style]="{width: '730px'}"  >
+
+                  <p-accordionTab header="Update Condition" >
+                    <app-trigger  trigger_function="edit" [inputEditTrigger]="trigger" [editTriggerIndex]="triggerIndex"></app-trigger>
+                  </p-accordionTab>
+                </p-accordion>
+              </p-overlayPanel>
+            </p-header>
+          </p-card>
+          <div *ngIf="triggerIndex === triggerList.length - 1" class="ui-lg-offset-5 operator-plus-box">
+            <p-splitButton icon="fa fa-plus" [menuStyle]="{ marginBottom :'20px'}"
+                           menuStyleClass="operatorMenu"
+                           (onClick)="changeOperator($event, operators[0],triggerIndex);"
+                           (onDropdownClick)="saveOperationEventAndIndex($event,triggerIndex)"
+                           [model]="operatorLables">
+            </p-splitButton>
+          </div>
+          <div class="ui-lg-offset-5 operator-plus-box" *ngIf="triggerIndex !== triggerList.length - 1">
+            <p-dropdown [options]="operators"
+                        [placeholder]="selectedOperatorList[triggerIndex].operator"
+                        [(ngModel)]="selectedOperatorList[triggerIndex]"
+
+                        (onChange)="changeOperatorSelect(selectedOperatorList[triggerIndex],triggerIndex);"
+                        optionLabel="operator">
+            </p-dropdown>
+          </div>
+        </div>
+        <div class="ui-lg-offset-5 operator-plus-box">
+          <div *ngIf="triggerList === undefined || triggerList.length === 0">
+            <button pButton type="button" class="rule_create_button triggerOverlayButton" class="plus-button"
+                    icon="fa fa-plus"
+                    (click)="addTriggerOverlay($event);"></button>
+          </div>
+          <p-overlayPanel #triggerOverlay [appendTo]="'body'"
+                          [style]="{ 'border': '2px solid rgb(35, 153, 229)','background-color' : 'rgb(224, 224, 224)', 'padding-top' :'8px','padding-bottom' :'8px'}">
+            <p-accordion [multiple]="true"  [style]="{width: '730px'}"  >
+              <p-accordionTab   header="Existing Conditions" >
+                <app-trigger-combine></app-trigger-combine>
+              </p-accordionTab>
+              <p-accordionTab header="New Condition">
+                <app-trigger></app-trigger>
+
+              </p-accordionTab>
+            </p-accordion>
+          </p-overlayPanel>
+        </div>
+      </div>
+    </p-scrollPanel>
+  </div>
+  <div class="ui-lg-6 ui-md-6 condition_action_title actions">
+    <strong>Then: add one or more actions</strong>
+    <br>
+    <p-scrollPanel [style]="{height: '90%', backgroundColor:'transparent', borderColor:'transparent'}">
+      <div class="ui-lg-12 ui-md-12 actions-body" id="actions">
+        <div *ngFor="let action of actionList; let actionIndex = index" >
+          <p-card [style]="{width:'96%'}">
+            <div>{{ action.name }}</div>
+            <p-header>
+              <button pButton type="button" icon="fa fa-trash" class="remove-button ui-button-secondary" iconPos="right"
+                      (click)="removeAction(actionIndex);"></button>
+              <button *ngIf="rule_function === 'edit'" pButton type="button" icon="fa fa-edit" class="remove-button ui-button-secondary" iconPos="right"
+                      (click)="showEditActionOverlay(updateActionOverlay,$event,actionIndex,action)"></button>
+              <p-overlayPanel #updateActionOverlay [appendTo]="'body'"
+                              [style]="{ 'border': '2px solid rgb(35, 153, 229)','background-color' : 'rgb(224, 224, 224)', 'padding-top' :'8px','padding-bottom' :'8px'}">
+                <p-accordion [multiple]="true"  [style]="{width: '730px'}"  >
+
+                  <p-accordionTab header="Update Action" >
+                    <app-action  action_function="edit" [inputEditAction]="action" [editActionIndex]="actionIndex"></app-action>
+                  </p-accordionTab>
+                </p-accordion>
+              </p-overlayPanel>
+            </p-header>
+          </p-card>
+          <div class="ui-lg-offset-5 operator-box" *ngIf="actionIndex !== actionList.length - 1">
+            <span>AND</span>
+          </div>
+        </div>
+        <div class="ui-lg-offset-5 operator-plus-box last_distance" >
+          <button pButton type="button" class="rule_create_button" class="plus-button" icon="fa fa-plus"
+                  (click)="addActionOverlay($event,actionOverlay);"></button>
+        </div>
+        <p-overlayPanel #actionOverlay [appendTo]="'body'"
+                        [style]="{ 'border': '2px solid rgb(35, 153, 229)','background-color' : 'rgb(224, 224, 224)', 'padding-top' :'8px','padding-bottom' :'8px'}">
+          <p-accordion [multiple]="true"  [style]="{width: '730px'}"  >
+            <p-accordionTab   header="Existing Actions" >
+              <app-action-combine></app-action-combine>
+            </p-accordionTab>
+            <p-accordionTab header="New Action">
+              <app-action></app-action>
+            </p-accordionTab>
+          </p-accordion>
+        </p-overlayPanel>
+      </div>
+    </p-scrollPanel>
+  </div>
+</div>

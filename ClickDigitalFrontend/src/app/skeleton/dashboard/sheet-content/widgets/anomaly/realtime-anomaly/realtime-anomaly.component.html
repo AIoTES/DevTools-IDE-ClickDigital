@@ -1,0 +1,90 @@
+<p-dialog header="Realtime Anomaly Data Settings" [modal]=true appendTo="body" [width]="700"
+          [(visible)]="displaySettings" [closable]="false">
+  <div class="ui-g">
+    <div class="ui-g-12 grid-elem">
+      <h3>Representation settings</h3>
+    </div>
+    <div class="ui-g-12 grid-elem">
+      <div class="ui-g-4 grid-elem">Number of samples:</div>
+      <input pInputText class="gridster-item-content" [(ngModel)]="this.selectedNumberOfValues"  style="width: 200px; padding-left: 0;">
+    </div>
+    <div class="ui-g-12 grid-elem">
+      <div class="ui-g-4 grid-elem">X axes label:</div>
+      <div class="grid-elem"><b>{{this.axesOptions.xLabel}}</b></div>
+    </div>
+    <div class="ui-g-12 grid-elem">
+      <div class="ui-g-4 grid-elem">Y axes label:</div>
+      <input pInputText class="gridster-item-content" [(ngModel)]="this.axesOptions.yLabel"  style="width: 200px; padding-left: 0;">
+    </div>
+    <div class="ui-g-12" style="width:10px;"></div>
+    <div class="ui-g-12 grid-elem">
+      <h3>Input settings</h3>
+    </div>
+    <p-accordion [multiple]="true">
+      <div *ngFor="let group of dropdownList" class="ui-g-12 grid-elem">
+        <p-accordionTab [selected]="true"  style="align-items: center; overflow: auto; width: 100%;">
+          <p-header>
+            Device:
+            <p-dropdown appendTo="body" [options]="devicesList" (onChange)="setSensorDropdown(group.deviceEntity.deviceId)"
+                        [filter]="true" [(ngModel)]="group.deviceEntity.deviceId"
+                        [style]="{'width':'200px'}" placeholder="Select a device" (onClick)="$event.stopPropagation();$event.preventDefault();">
+            </p-dropdown>
+
+            Sensor:
+            <p-dropdown appendTo="body" [options]="group.sensorList" [filter]="true" [(ngModel)]="group.deviceEntity.entityId"
+                        [style]="{'width':'200px'}" placeholder="Select a sensor" (onChange)="setLabel(group.deviceEntity.entityId)" (onClick)="$event.stopPropagation();$event.preventDefault();">
+            </p-dropdown>
+
+          </p-header>
+          <div class="ui-g-12 grid-elem">
+            <div class="ui-g-4 grid-elem">Data label:</div>
+            <input pInputText class="gridster-item-content" [(ngModel)]="group.deviceEntity.label"  style="width: 200px; padding-left: 0;">
+          </div>
+          <div class="ui-g-12 grid-elem">
+            <div class="ui-g-4 grid-elem">Data unit:</div>
+            <input pInputText class="gridster-item-content" [(ngModel)]="group.deviceEntity.unit"  style="width: 200px; padding-left: 0;">
+          </div>
+        </p-accordionTab>
+      </div>
+    </p-accordion>
+  </div>
+  <p-footer>
+    <button type="button" pButton icon="fa-check" (click)="applySettings();" label="Apply"></button>
+    <button type="button" pButton icon="fa-close" (click)="abortChanges();" label="Cancel"></button>
+  </p-footer>
+</p-dialog>
+<button pButton icon="fa fa-cog" style="z-index: 6;" class="settings-button transparentButton tbutton ui-button-secondary" (mousedown)="$event.stopPropagation()" (touchstart)="$event.stopPropagation()" (click)="displaySettings=true;isAllowed=false;"  [hidden]=" !(loginStatus>1 && currentWidget.isDeveloped)"></button>
+<!--*ngIf="myChart != undefined && myChart.data!= undefined && myChart.data.datasets != []"-->
+<div class="ui-g">
+  <div class="ui-g-12">
+    <div class="ui-g-4 cut-text center-text" >
+      <svg height="15" width="15">
+          <circle cx="10" cy="10" r="5" fill="green" />
+      </svg> normal
+    </div>
+    <div class="ui-g-4 cut-text center-text">
+      <svg height="15" width="15">
+          <circle cx="10" cy="10" r="5" fill="orange" />
+      </svg> at risk
+    </div>
+    <div class="ui-g-4 cut-text center-text">
+      <svg height="15" width="15">
+          <circle cx="10" cy="10" r="5" fill="red" />
+      </svg> anomaly
+    </div>
+
+  </div>
+</div>
+<div  class="graph-canvas">
+  <canvas #chart>{{myChart}}</canvas>
+</div>
+
+
+
+<div class="spinner" *ngIf="loading">
+  <small><strong>NETWORK STARTING   </strong></small>
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+
+</div>

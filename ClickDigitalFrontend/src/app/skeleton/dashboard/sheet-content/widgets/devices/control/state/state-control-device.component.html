@@ -1,0 +1,100 @@
+<p-dialog header="Device Control Settings" [modal]=true appendTo="body" [width]="550"
+          [(visible)]="displaySettings" [closable]="false">
+
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <h3>Device Specifications</h3>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">Device:</div>
+      <p-dropdown appendTo="body" [options]="devicesList" [filter]="true" [placeholder]="'Select a device.'"
+                  [(ngModel)]="selectedDevice"
+                  (onChange)="updateActionDropdown()" [style]="{'width':'200px'}">
+      </p-dropdown>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">Action:</div>
+      <p-dropdown [autoWidth]="true"
+                  [options]="actionList" [placeholder]="'Select an action.'" [(ngModel)]="selectedAction"
+                  [style]="{'width':'200px'}">
+      </p-dropdown>
+    </div>
+
+    <div class="ui-g-12" >
+      <h3>Slider Specifications</h3>
+    </div>
+
+    <div class="ui-g-12">
+      <div class="ui-g-4">Position:</div>
+      <div class="ui-g">
+        <div class="ui-g-12"><p-radioButton  name="positionGroup" value="right" label="right" [(ngModel)]="selectedPosition"></p-radioButton></div>
+        <div class="ui-g-12"><p-radioButton name="positionGroup" value="bottom" label="bottom" [(ngModel)]="selectedPosition"></p-radioButton></div>
+      </div>
+    </div>
+
+    <div class="ui-g-12">
+      <h3>Icon Specifications</h3>
+    </div>
+    <div class="ui-g-12">
+      <p-selectButton [options]="icons" [(ngModel)]="selectedIcon"></p-selectButton>
+    </div>
+  </div>
+  <p-footer>
+    <button type="'button" pButton icon="fa-check" (click)="applySettings()" label="Apply"></button>
+    <button type="button" pButton icon="fa-close" (click)="abortChanges()" label="Cancel"></button>
+  </p-footer>
+</p-dialog>
+
+<button pButton icon="fa fa-cog" style="z-index: 6;" class="settings-button tbutton ui-button-secondary"
+        (mousedown)="$event.stopPropagation()" (touchstart)="$event.stopPropagation()" (click)="displaySettings=true;"
+        [hidden]=" !(loginStatus>1 && currentWidget.isDeveloped)"></button>
+
+<div *ngIf="currentWidget.controlPosition === 'right'"
+     style="display: flex; flex-direction:row; align-items: center; height:100%; width:100%;">
+    <div>
+    <i [class]="currentWidget.icon"></i>
+  </div>
+  <div style="padding-left: 15px; min-width:100px;">
+    <input pInputText *ngIf="currentWidget.isDeveloped" style="width:100%;" [(ngModel)]="currentWidget.name" (ngModelChange)="saveInDatabase($event, 'name')"
+           (mousedown)="$event.stopPropagation()" (touchstart)="$event.stopPropagation()" class="gridster-item-content">
+    <h2 *ngIf="!currentWidget.isDeveloped" style="margin: 0; width: 100%;">{{ currentWidget.name }}</h2>
+
+    <input pInputText *ngIf="currentWidget.isDeveloped" style="width:100%; " [placeholder]="'Additional info'" [(ngModel)]="currentWidget.additionalInfo" (ngModelChange)="saveInDatabase($event, 'additionalInfo')"
+           (mousedown)="$event.stopPropagation()" (touchstart)="$event.stopPropagation()" class="gridster-item-content">
+    <div *ngIf="!currentWidget.isDeveloped" style="margin: 0; color: grey; width:100%;">{{ currentWidget.additionalInfo }}</div>
+  </div>
+
+  <div style="padding-left: 15px; width:100%">
+      <div style="padding-top: 15px; min-width: 150px; width: 100%;">
+        <p-dropdown
+          [options]="stateActionList" class="gridster-item-content" [(ngModel)]="currentWidget.value" (onChange)="sendCommand(currentWidget.value)"
+          [style]="{'width':'100%'}">
+        </p-dropdown>
+      </div>
+  </div>
+</div>
+<div *ngIf="currentWidget.controlPosition === 'bottom'">
+  <div style="display: flex; flex-direction:row; align-items: center; height:100%; width:100%;">
+    <div>
+      <i [class]="currentWidget.icon"></i>
+    </div>
+    <div style="padding-left: 15px;">
+      <input pInputText *ngIf="currentWidget.isDeveloped" style="width:100%;" [(ngModel)]="currentWidget.name" (ngModelChange)="saveInDatabase($event, 'name')"
+             (mousedown)="$event.stopPropagation()" (touchstart)="$event.stopPropagation()" class="gridster-item-content">
+      <h2 *ngIf="!currentWidget.isDeveloped" style="margin: 0; width:100%;">{{ currentWidget.name }}</h2>
+
+      <input pInputText *ngIf="currentWidget.isDeveloped" style="width:100%; " [placeholder]="'Additional info'" [(ngModel)]="currentWidget.additionalInfo" (ngModelChange)="saveInDatabase($event, 'additionalInfo')"
+             (mousedown)="$event.stopPropagation()" (touchstart)="$event.stopPropagation()" class="gridster-item-content">
+      <div *ngIf="!currentWidget.isDeveloped" style="margin: 0; color: grey; width:100%;">{{ currentWidget.additionalInfo }}</div>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; align-items: center; padding-top:15px;">
+      <div style="width: 100%">
+        <p-dropdown
+          [options]="stateActionList" class="gridster-item-content" [(ngModel)]="currentWidget.value" (onChange)="sendCommand(currentWidget.value)"
+          [style]="{'width':'100%'}">
+        </p-dropdown>
+      </div>
+  </div>
+</div>

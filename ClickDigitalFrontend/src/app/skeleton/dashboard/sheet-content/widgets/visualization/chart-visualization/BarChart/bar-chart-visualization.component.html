@@ -1,0 +1,116 @@
+<p-dialog header="Bar Chart Settings" [modal]=true appendTo="body" [width]="700"
+          [(visible)]="displaySettings" [closable]="false">
+  <div class="ui-g">
+    <div class="ui-g-12 grid-elem">
+      <h3>Preferences</h3>
+    </div>
+    <div class="ui-g-12 grid-elem">
+      <div class="ui-g-4 grid-elem">Type of sensor(s):</div>
+      <div class="ui-g-4"><p-radioButton name="sensorType" value="true" label="with numerical values" [(ngModel)]="sensorType" inputId="one" (click)="setIsNumeric('true');"></p-radioButton></div>
+      <div class="ui-g-4"><p-radioButton name="sensorType" value="false" label="with states" [(ngModel)]="sensorType" inputId="many" (click)="setIsNumeric('false');"></p-radioButton></div>
+    </div>
+    <div class="ui-g-12 grid-elem">
+      <div class="ui-g-4 grid-elem">Number of sensors:</div>
+      <div class="ui-g-4"><p-radioButton name="sensorNumber" value="true" label="one" [(ngModel)]="sensorNumber" inputId="one" (click)="setIsMonoVis('true');"></p-radioButton></div>
+      <div class="ui-g-4"><p-radioButton name="sensorNumber" value="false" label="many" [(ngModel)]="sensorNumber" inputId="many" (click)="setIsMonoVis('false');"></p-radioButton></div>
+    </div>
+    <div class="ui-g-12 grid-elem">
+      <h3>Input Data</h3>
+    </div>
+    <p-accordion [multiple]="true">
+      <div *ngFor="let group of dropdownList" class="ui-g-12 grid-elem">
+        <p-accordionTab  style="align-items: center; overflow: auto; width: 100%;">
+          <p-header>
+            Device:
+            <p-dropdown appendTo="body" [options]="devicesList" (onChange)="setSensorDropdown(group.deviceEntity.deviceId)"
+                        [filter]="true" [(ngModel)]="group.deviceEntity.deviceId"
+                        [style]="{'width':'200px'}" placeholder="Select a device" (onClick)="$event.stopPropagation();$event.preventDefault();">
+            </p-dropdown>
+
+            Sensor:
+            <p-dropdown appendTo="body" [options]="group.sensorList" [filter]="true" [(ngModel)]="group.deviceEntity.entityId"
+                        [style]="{'width':'200px'}" placeholder="Select a sensor" (onChange)="setValueFormat()" (onClick)="$event.stopPropagation();$event.preventDefault();">
+            </p-dropdown>
+
+            <button *ngIf="!isMonoVis && dropdownList.indexOf(group) > 0" style = "margin-left: 10px;" type="button" pButton icon="fa fa-minus" (click)="$event.stopPropagation();$event.preventDefault();deleteDropdowns(group.deviceEntity);"></button>
+
+          </p-header>
+          <div class="ui-g-12 grid-elem">
+            <div class="ui-g-4 grid-elem">Data label:</div>
+            <input pInputText class="gridster-item-content" [(ngModel)]="group.deviceEntity.label"  style="width: 200px; padding-left: 0;">
+          </div>
+          <div class="ui-g-12 grid-elem">
+            <div class="ui-g-4 grid-elem">Bar color:</div>
+            <p-colorPicker [(ngModel)]="group.deviceEntity.color"></p-colorPicker>
+          </div>
+
+        </p-accordionTab>
+      </div>
+    </p-accordion>
+
+    <div class="ui-g-12" *ngIf="!isMonoVis">
+      <button type="button" pButton icon="fa fa-plus" (click)="addNewDropdowns()"></button>
+    </div>
+    <div class="ui-g-12 grid-elem">
+      <h3>Representation</h3>
+    </div>
+    <div class="ui-g-12 grid-elem">
+      <div class="ui-g-4 grid-elem">X axes label:</div>
+      <input pInputText class="gridster-item-content" [(ngModel)]="this.axesOptions.xLabel"  style="width: 200px; padding-left: 0;">
+    </div>
+    <div class="ui-g-12 grid-elem">
+      <div class="ui-g-4 grid-elem">Y axes label:</div>
+      <input pInputText class="gridster-item-content" [(ngModel)]="this.axesOptions.yLabel"  style="width: 200px; padding-left: 0;">
+    </div>
+
+    <div class="ui-g-12 grid-elem">
+      <div class="ui-g-4 grid-elem">Time Period:</div>
+      <div class="ui-g-2 grid-elem">from</div>
+      <p-calendar [(ngModel)]="selectedStart" [showTime]="true" [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true" yearRange="1970:2020" appendTo="body"></p-calendar>
+    </div>
+    <div class="ui-g-12 grid-elem">
+      <div class="ui-g-4 grid-elem"></div>
+      <div class="ui-g-2 grid-elem">to</div>
+      <p-calendar [(ngModel)]="selectedEnd" [showTime]="true" [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true" yearRange="1970:2020" appendTo="body"></p-calendar>
+    </div>
+    <!--div class="ui-g-12 grid-elem">
+      <div class="ui-g-4 grid-elem">Values per</div>
+      <p-dropdown [autoWidth]="true" [placeholder]="'Select a time interval'"
+                  [options]="timeList" [(ngModel)]="timeType"
+                  [style]="{'width':'200px'}"  appendTo="body">
+      </p-dropdown>
+      <div class="dropdown"></div>
+    </div-->
+    <div *ngIf="isNumeric" class="ui-g-12 grid-elem">
+      <div class="ui-g-4 grid-elem">Calculation:</div>
+      <p-dropdown [autoWidth]="true" [placeholder]="'Select a calculation type'"
+                  [options]="calculationList" [(ngModel)]="calculationType"
+                  [style]="{'width':'200px'}"  appendTo="body">
+      </p-dropdown>
+      <div class="dropdown"></div>
+    </div>
+    <div *ngIf="!isNumeric" class="ui-g-12 grid-elem">
+        <div class="ui-g-4 grid-elem">Frequency:</div>
+        <div class="ui-g-4"><p-radioButton name="countType" value="count" label="count" [(ngModel)]="frequency" inputId="count" ></p-radioButton></div>
+        <div class="ui-g-4"><p-radioButton name="countType" value="percentage" label="percentage" [(ngModel)]="frequency" inputId="percentage"></p-radioButton></div>
+    </div>
+    <div class="ui-g-12" style="width:10px;"></div>
+
+  </div>
+  <p-footer>
+    <button type="button" pButton icon="fa-check" (click)="applySettings();" label="Apply"></button>
+    <button type="button" pButton icon="fa-close" (click)="abortChanges()" label="Cancel"></button>
+  </p-footer>
+</p-dialog>
+<button pButton icon="fa fa-cog" style="z-index: 6;" class="settings-button transparentButton tbutton ui-button-secondary"
+        (mousedown)="$event.stopPropagation()" (touchstart)="$event.stopPropagation()" (click)="displaySettings=true;isAllowed=false;"
+        [hidden]=" !(loginStatus>1 && currentWidget.isDeveloped)"></button>
+<!--*ngIf="myChart != undefined && myChart.data!= undefined && myChart.data.datasets != []"-->
+<div  class="graph-canvas">
+  <canvas #chart>{{myChart}}</canvas>
+</div>
+<div style="text-align: center;">
+  <p-message *ngIf="isEmpty" severity="info" text="You selected device entities without historical data."></p-message>
+</div>
+
+

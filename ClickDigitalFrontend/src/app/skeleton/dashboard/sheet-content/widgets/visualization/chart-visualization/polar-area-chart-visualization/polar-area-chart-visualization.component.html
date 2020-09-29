@@ -1,0 +1,71 @@
+<p-dialog header="Polar Area Chart Settings" [modal]=true appendTo="body" [width]="700"
+          [(visible)]="displaySettings" [closable]="false">
+  <div class="ui-g">
+    <div class="ui-g-12 grid-elem">
+      <h3>Input Data</h3>
+    </div>
+    <div class="ui-g-12 grid-elem">
+      <div class="ui-g-4 grid-elem">Sensor Type:</div>
+      <p-dropdown appendTo="body" [options]="deviceTypeList"
+                  [(ngModel)]="this.selectedDeviceType" [group]="true"
+                  [style]="{'min-width':'200px'}" (onChange)="calculateLocationNumber();" placeholder="Select a device type" (onClick)="$event.stopPropagation();$event.preventDefault();">
+      </p-dropdown>
+    </div>
+    <div class="ui-g-12 grid-elem">
+     There is/are currently {{this.numberOfLocations}} device(s) with this type.
+    </div>
+    <!--div class="ui-g-12 grid-elem">
+      <div class="ui-g-4 grid-elem">Location: </div>
+      <p-dropdown appendTo="body" [options]="locationsList"
+                  [filter]="true" [(ngModel)]="this.selectedLocation"
+                  [style]="{'min-width':'200px'}" (onChange)="setDeviceList(this.selectedLocation)" placeholder="Select a location" (onClick)="$event.stopPropagation();$event.preventDefault();">
+      </p-dropdown>
+    </div-->
+    <div class="ui-g-12 grid-elem">
+      <div class="ui-g-4 grid-elem">Time Period:</div>
+      <div class="ui-g-2 grid-elem">from</div>
+      <p-calendar [(ngModel)]="selectedStart" [showTime]="true" [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true" yearRange="1970:2020" appendTo="body"></p-calendar>
+    </div>
+    <div class="ui-g-12 grid-elem">
+      <div class="ui-g-4 grid-elem"></div>
+      <div class="ui-g-2 grid-elem">to</div>
+      <p-calendar [(ngModel)]="selectedEnd" [showTime]="true" [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true" yearRange="1970:2020" appendTo="body"></p-calendar>
+    </div>
+    <div class="ui-g-12 grid-elem">
+      <div class="ui-g-4 grid-elem">Calculation:</div>
+      <p-dropdown [autoWidth]="true" [placeholder]="'Select a calculation type'"
+                  [options]="calculationList" [(ngModel)]="calculationType"
+                  [style]="{'width':'200px'}"  appendTo="body">
+      </p-dropdown>
+      <div class="dropdown"></div>
+    </div>
+    <div class="ui-g-12 grid-elem">
+      <h3>Representation</h3>
+    </div>
+    <div class="ui-g-12 grid-elem">
+      <div class="ui-g-4 grid-elem">Color family:</div>
+      <p-dropdown appendTo="body" [options]="colorPaletteList" [filter]="true" [(ngModel)]="currentPalette"
+                  [style]="{'width':'200px'}" placeholder="Select a color family" (onClick)="$event.stopPropagation();$event.preventDefault();">
+      </p-dropdown>
+    </div>
+
+    <div class="ui-g-12" style="width:10px;"></div>
+
+  </div>
+  <p-footer>
+    <button type="button" pButton icon="fa-check" (click)="applySettings();" label="Apply"></button>
+    <button type="button" pButton icon="fa-close" (click)="abortChanges()" label="Cancel"></button>
+  </p-footer>
+</p-dialog>
+<button pButton icon="fa fa-cog" style="z-index: 6;" class="settings-button transparentButton tbutton ui-button-secondary"
+        (mousedown)="$event.stopPropagation()" (touchstart)="$event.stopPropagation()" (click)="displaySettings=true;"
+        [hidden]=" !(loginStatus>1 && currentWidget.isDeveloped)"></button>
+<!--*ngIf="myChart != undefined && myChart.data!= undefined && myChart.data.datasets != []"-->
+<div  class="graph-canvas">
+  <canvas #chart>{{myChart}}</canvas>
+</div>
+<!--div style="text-align: center;">
+  <p-message *ngIf="isEmpty" severity="info" text="You selected device entities without historical data."></p-message>
+</div-->
+
+

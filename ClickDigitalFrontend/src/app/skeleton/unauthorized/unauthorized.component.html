@@ -1,0 +1,23 @@
+
+<p-growl [(value)]="msgs"></p-growl>
+<div *ngIf="status == 0">
+
+</div>
+
+<div *ngIf="status == 1">
+  <p-card title="Error!" [style]="{width: '360px'}" styleClass="ui-card-shadow">
+    <p>You're not authorized to be here. Maybe you just need to login? </p>
+    <p-footer>
+      <button pButton (click)="toLogin()">Login</button>
+    </p-footer>
+  </p-card>
+</div>
+
+<div *ngIf="status == 2">
+  <p-card title="Error!" [style]="{width: '360px'}" styleClass="ui-card-shadow">
+    <p>Your Session has expired or your account has been logged in from another device. Please log in again.</p>
+    <p-footer>
+      <button pButton (click)="toLogin()">Login</button>
+    </p-footer>
+  </p-card>
+</div>

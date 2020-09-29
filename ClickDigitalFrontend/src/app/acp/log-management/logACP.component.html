@@ -1,0 +1,27 @@
+<div class="containerLogACP">
+	<p-table #dt [value]="logs" [columns]="cols" [rows]="10" [loading]="loading" [paginator]="true"
+           (onLazyLoad)="loadLogs($event)" [totalRecords]="100000" [lazy]="true">
+		<ng-template pTemplate="header" let-columns>
+			<tr>
+				<th *ngFor="let col of columns">
+					{{col.header}}
+				</th>
+			</tr>
+			<tr>
+				<th *ngFor="let col of columns" [ngSwitch]="col.field">
+					<p-calendar [inputStyle]="{'width': '220px', 'font-size': '12px'}" appendTo="body"  *ngSwitchCase="'date'"
+                      [(ngModel)]="rangeDates" selectionMode="range" [readonlyInput]="true" [showTime]="true" (onSelect)="loadLogs($event)"></p-calendar>
+					<input style="width: 100px;" *ngSwitchCase="'username'" pInputText type="text" (input)="loadLogs($event)" [(ngModel)]="text">
+				</th>
+			</tr>
+		</ng-template>
+
+		<ng-template pTemplate="body" let-log let-columns="columns">
+			<tr>
+				<td *ngFor="let col of columns">
+					{{log[col.field]}}
+				</td>
+			</tr>
+		</ng-template>
+	</p-table>  
+</div>

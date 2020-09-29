@@ -1,0 +1,32 @@
+textarea {
+  width: 450px;
+  min-height: 200px;
+}
+.userHeaderInput {
+  min-width: 200px;
+  background: none;
+  border: none;
+  color: white;
+  font-weight: bold;
+}
+
+.userInput {
+  min-width: 300px;
+}
+
+.ui-listbox {
+  width: 450px;
+  min-height: 200px;
+}
+
+.ui-widget-overlay {
+  z-index: 0 !important;
+}
+
+.ui-fieldset {
+  min-width: 500px !important;
+}
+
+.ui-dropdown {
+  min-width: 300px !important;
+}

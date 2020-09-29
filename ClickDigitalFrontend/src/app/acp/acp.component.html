@@ -1,0 +1,19 @@
+<div class="containerACPArea">
+	<div style="padding-top: 5px; color: white; font-size: 30px; font-family: sans-serif; background-color: rgba(0,0,0,0.5)">
+		<div style="text-align: center;">
+			ADMIN CONTROL PANEL 3.0
+		</div>
+	</div>
+	<div class="acp-card ui-grid">
+			<div class="panelMenu">
+				<p-panelMenu [multiple]="false" #panelMenu></p-panelMenu>
+			</div>   
+			<div class="acpContent">
+				<p-scrollPanel [style]="{height: '100%'}">
+					<ng-container #tab></ng-container>
+				</p-scrollPanel>	
+			</div>  
+		
+	</div>
+</div>
+

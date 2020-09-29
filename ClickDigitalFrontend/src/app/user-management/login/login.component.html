@@ -1,0 +1,34 @@
+ <p-growl [(value)]="msgs"></p-growl>
+
+  <div style="text-align: center" class="ui-grid-row">
+    <span style="color: white; margin: auto">Please enter your Credentials</span><br><br>
+  </div>
+  <div style="text-align: center" id="form" class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+      <!-- login input fields -->
+      <div style="text-align: center" class="ui-grid-row">
+        <div style="margin: auto" class="inputgroup ui-inputgroup ui-grid-col-6">
+          <span style="background: transparent; border: none; margin-left: auto" class="ui-inputgroup-addon"><i style="color: white" class="fa fa-user"></i></span>
+          <input style="margin-right: auto" #username type="text" pInputText placeholder="Username" (keyup.enter)="login(username.value, password.value)">
+        </div>
+      </div>
+    <div style="text-align: center" class="ui-grid-row">
+    <div style="margin: auto" class="inputgroup ui-inputgroup ui-grid-col-6">
+      <span style="background: transparent; border: none; margin-left: auto" class="ui-inputgroup-addon"><i style="color: white" class="fa fa-lock"></i></span>
+      <input style="margin-right: auto"  #password type="password" pInputText placeholder="Password" (keyup.enter)="login(username.value, password.value)">
+    </div>
+    </div>
+      <!-- login button -->
+      <div class="ui-g">
+      <div class="ui-g-12" style="text-align: center">
+      <button style="margin: auto; background-color: #297E60; border: none" class="button" pButton type="submit" label="Login" (click)="login(username.value, password.value)"(keyup.enter)="login(username.value, password.value)" [disabled]="this.loginsLeft <= 0">
+      </button>
+    </div>
+      <div class="ui-g-12" style="text-align: center">
+      <button style="margin: auto;background-color: #297E60; border: none" class="button" pButton type="submit" label="Forgot Password?" *ngIf="this.loginsLeft <= 0" (click)="this.router.navigate(['/'], {fragment: 'forgotPassword'})">
+      </button>
+    </div>
+    <div class="loading-indicator" style="text-align: center;" *ngIf="isLoading">
+      <p-progressSpinner [style]="{width: '50px', height: '50px'}" strokeWidth="8"></p-progressSpinner>
+    </div>
+  </div>
+

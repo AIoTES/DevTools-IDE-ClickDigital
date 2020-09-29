@@ -1,0 +1,14 @@
+<div class="ui-g">
+  <div class="ui-lg-12 ui-md-12 ui-sm-12">
+    <p-autoComplete [(ngModel)]="existingTrigger"
+                    [suggestions]="triggers"
+                    field="name"
+                    (completeMethod)="search($event)"
+                    [dropdown]="true"
+                    [size]="73"
+                    placeholder="Select Condition"
+                    (onSelect)="addSelectedTrigger(existingTrigger);"
+    >
+    </p-autoComplete>
+  </div>
+</div>

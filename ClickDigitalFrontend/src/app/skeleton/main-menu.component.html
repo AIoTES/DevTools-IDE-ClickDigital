@@ -1,0 +1,25 @@
+<!--Main Menu Bar with User profile, Platforms, ...-->
+<div id="topBar">
+
+
+  <p-overlayPanel #op>
+    <app-user-settings (messageEvent)="forwardMsgToDashboardComponent($event)"></app-user-settings></p-overlayPanel>
+  <p-menubar [model]="items" class="horizontalMenu">
+    <p-menu #menuThemeHor [popup]="true" [model]="itemsTheme"></p-menu>
+    <app-notify-message></app-notify-message>
+    <button type="button" pButton icon="fa fa-paint-brush" (click)="menuThemeHor.toggle($event)"></button>
+    <button type="button" pButton icon="fa fa-user" (click)="op.toggle($event)"></button>
+    <img class="clickDigitalLogo" src="assets/img/clickdigitallogo.svg">
+  </p-menubar>
+
+
+  <p-menubar *ngIf="items !== undefined" [model]="items" class="verticalMenu">
+    <p-menu #mobileMenuIcon [model]="items" [popup]="true"></p-menu>
+    <p-menu #menuTheme [popup]="true" [model]="itemsTheme"></p-menu>
+    <button type="button" pButton icon="fa fa-paint-brush" (click)="menuTheme.toggle($event)"></button>
+    <button type="button" pButton icon="fa fa-user" (click)="op.toggle($event)"></button>
+    <button type="button" pButton icon="fa fa-bars" (click)="mobileMenuIcon.toggle($event)"></button>
+    <img class="clickDigitalLogo" src="assets/img/clickdigitallogo.svg">
+  </p-menubar>
+
+</div>

@@ -1,0 +1,56 @@
+.center {
+  width: 100%;
+  height: 100%;
+  background-image: url("../bcklogin.jpg");
+  background-size: cover;
+}
+
+
+.form {
+  width: 75%;
+  margin: auto;
+}
+
+.input-form {
+  margin: auto;
+  width: 75%;
+}
+
+.back-button{
+  display: table-cell;
+}
+
+.submit-button{
+  display: table-cell;
+}
+.cardregister{
+  align-content: center;
+  width: 45vh;
+  height: fit-content;
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  background:rgba(96, 191, 161,0.6);
+  border: 0.5px;
+  border-style: solid;
+  border-color: rgba(255,255,255,0.3);
+  padding: 15px;
+}
+.inputgroup{
+  opacity: 0.5;
+  width: 100%;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+.textInputDescription {
+  color: white;
+}
+.textInputStyle{
+  background: transparent;
+  border-color: white;
+}
+

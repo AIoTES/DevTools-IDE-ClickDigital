@@ -1,0 +1,99 @@
+<p-dialog header="Doughnut Chart Settings" [modal]=true appendTo="body" [width]="700"
+          [(visible)]="displaySettings" [closable]="false">
+  <div class="ui-g">
+    <div class="ui-g-12 grid-elem">
+      <h3>Input Data</h3>
+    </div>
+    <div class="ui-g-12 grid-elem">
+      <div class="ui-g-4 grid-elem">Distribution of</div>
+      <p-dropdown appendTo="body" [options]="distributionList"
+                  [filter]="true" [(ngModel)]="this.selectedDistribution"
+                  [style]="{'min-width':'200px'}" (onChange)="setDistributionParameters()" placeholder="Select a distribution" (onClick)="$event.stopPropagation();$event.preventDefault();">
+      </p-dropdown>
+    </div>
+    <div *ngIf="(this.selectedDistribution === 'actuator')" class="ui-g-12 grid-elem">
+      <div class="ui-g-4 grid-elem">Time Period:</div>
+      <div class="ui-g-2 grid-elem">from</div>
+      <p-calendar [(ngModel)]="selectedStart" [showTime]="true" [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true" yearRange="1970:2020" appendTo="body"></p-calendar>
+    </div>
+    <div class="ui-g-12 grid-elem" *ngIf="(this.selectedDistribution === 'actuator')">
+      <div class="ui-g-4 grid-elem"></div>
+      <div class="ui-g-2 grid-elem">to</div>
+      <p-calendar [(ngModel)]="selectedEnd" [showTime]="true" [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true" yearRange="1970:2020" appendTo="body"></p-calendar>
+    </div>
+    <p-accordion *ngIf="this.selectedDistribution === 'actuator'">
+        <p-accordionTab  style="align-items: center; overflow: auto; width: 100%;">
+          <p-header>
+            Device:
+            <p-dropdown appendTo="body" [options]="devicesList" (onChange)="setSensorDropdown(deviceEntities[0].deviceId)"
+                        [filter]="true" [(ngModel)]="deviceEntities[0].deviceId"
+                        [style]="{'width':'200px'}" placeholder="Select a device" (onClick)="$event.stopPropagation();$event.preventDefault();">
+            </p-dropdown>
+
+            Sensor:
+            <p-dropdown appendTo="body" [options]="sensorList" [filter]="true" [(ngModel)]="deviceEntities[0].entityId"
+                        [style]="{'width':'200px'}" placeholder="Select a sensor" (onClick)="$event.stopPropagation();$event.preventDefault();">
+            </p-dropdown>
+
+          </p-header>
+          <div class="ui-g-12 grid-elem">
+            <div class="ui-g-4 grid-elem">Data label:</div>
+            <input pInputText class="gridster-item-content" [(ngModel)]="deviceEntities[0].label"  style="width: 200px; padding-left: 0;">
+          </div>
+          <div class="ui-g-12 grid-elem">
+            <div class="ui-g-4 grid-elem">Data unit:</div>
+            <input pInputText class="gridster-item-content" [(ngModel)]="deviceEntities[0].unit"  style="width: 200px; padding-left: 0;">
+          </div>
+        </p-accordionTab>
+    </p-accordion>
+
+    <div *ngIf="(this.selectedDistribution === 'device')" class="ui-g-12 grid-elem">
+      <div class="ui-g-4 grid-elem">Devices:</div>
+      <div class="ui-g">
+        <div class="ui-g-12 grid-elem" *ngFor="let device of deviceEntities">
+          <p-dropdown appendTo="body" [options]="allDevicesList"
+                      [filter]="true" [(ngModel)]="device.deviceId"
+                      [style]="{'min-width':'200px'}" placeholder="Select a device" (onClick)="$event.stopPropagation();$event.preventDefault();">
+          </p-dropdown>
+          <button *ngIf="deviceEntities.length > 1" style = "margin-left: 10px;" type="button" pButton icon="fa fa-minus" (click)="$event.stopPropagation();$event.preventDefault();deleteDropdowns(device);"></button>
+        </div>
+        <div class="ui-g-12">
+          <button type="button" pButton icon="fa fa-plus" (click)="addNewDropdowns()"></button>
+        </div>
+      </div>
+    </div>
+    <div class="ui-g-12 grid-elem">
+      <h3>Representation</h3>
+    </div>
+    <div class="ui-g-12 grid-elem">
+      <div class="ui-g-4 grid-elem">Doughnut circle:</div>
+      <div class="ui-g-4"><p-radioButton name="isCircleFull" value="true" label="full circle" [(ngModel)]="isCircleFull" inputId="full"></p-radioButton></div>
+      <div class="ui-g-4"><p-radioButton name="isCircleFull" value="false" label="half circle" [(ngModel)]="isCircleFull" inputId="half"></p-radioButton></div>
+    </div>
+    <div class="ui-g-12 grid-elem">
+      <div class="ui-g-4 grid-elem">Color family:</div>
+      <p-dropdown appendTo="body" [options]="colorPaletteList" [filter]="true" [(ngModel)]="currentPalette"
+                  [style]="{'width':'200px'}" placeholder="Select a color family" (onClick)="$event.stopPropagation();$event.preventDefault();">
+      </p-dropdown>
+    </div>
+
+    <div class="ui-g-12" style="width:10px;"></div>
+
+  </div>
+  <p-footer>
+    <button type="button" pButton icon="fa-check" (click)="applySettings();" label="Apply"></button>
+    <button type="button" pButton icon="fa-close" (click)="abortChanges()" label="Cancel"></button>
+  </p-footer>
+</p-dialog>
+<button pButton icon="fa fa-cog" style="z-index: 6;" class="settings-button transparentButton tbutton ui-button-secondary"
+        (mousedown)="$event.stopPropagation()" (touchstart)="$event.stopPropagation()" (click)="displaySettings=true;"
+        [hidden]=" !(loginStatus>1 && currentWidget.isDeveloped)"></button>
+<!--*ngIf="myChart != undefined && myChart.data!= undefined && myChart.data.datasets != []"-->
+<div  class="graph-canvas">
+  <canvas #chart>{{myChart}}</canvas>
+</div>
+<div style="text-align: center;">
+  <p-message *ngIf="isEmpty" severity="info" text="You selected device entities without historical data."></p-message>
+</div>
+
+

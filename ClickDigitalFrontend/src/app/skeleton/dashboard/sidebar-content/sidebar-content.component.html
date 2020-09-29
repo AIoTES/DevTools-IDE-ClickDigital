@@ -1,0 +1,35 @@
+<!-- Notifications-->
+<!-- Dialog for confirmation messages-->
+<p-confirmDialog></p-confirmDialog>
+<p-menu id="sidebarM" [model]=""></p-menu>
+<div style=" position: absolute; left: 0; right: 0; top: 0; height: 100%">
+
+  <!--div style="display: table-row; text-align: center; visibility: hidden">
+    <button  class="buttonSideMenu" pButton icon="fa fa-tint"></button>
+    <button class="buttonSideMenu" pButton icon="fa fa-eyedropper"></button>
+    <button class="buttonSideMenu" pButton icon="fa fa-object-ungroup"></button>
+    <button class="buttonSideMenu" pButton icon="fa fa-font"></button>
+    <button class="buttonSideMenu" pButton icon="fa fa-pie-chart"></button>
+  </div-->
+  <div style="text-align: center; padding: 10px 10px 5px 10px;">
+    <i (click)="op.toggle($event)" style="text-align: center; cursor: pointer; font-size: 1.5em; margin-top: 5px; margin-bottom: 5px" class="fa fa-th-large"></i><br>
+    <!--<i style="cursor: pointer; font-size: 1.5em; margin-top: 5px; margin-bottom: 5px" class="fa fa-eye"></i><br>
+    <i style="cursor: pointer; font-size: 1.5em; margin-top: 5px; margin-bottom: 5px"  class="fa fa-cart-plus"></i!-->
+  </div>
+  <p-menu #menu [popup]="true" [model]="itemsDelete" appendTo="body"></p-menu>
+  <div style=" text-align: center; padding: 5px 10px 10px 10px; ">
+    <i (click)="menu.toggle($event)" style="cursor: pointer;  font-size: 1.5em" class="fa fa-trash"></i>
+  </div>
+</div>
+
+<p-overlayPanel #op appendTo="body">
+  <!--<div class="ui-inputgroup">
+    <input id="input" style="width: 100%;" type="text" pInputText placeholder="Widgetname">
+    <button pButton type="button" icon="fa fa-search"></button>
+  </div>-->
+
+  <div>
+    <p-panelMenu [model]="items" [style]="{'width':'300px'}"></p-panelMenu>
+  </div>
+</p-overlayPanel>
+

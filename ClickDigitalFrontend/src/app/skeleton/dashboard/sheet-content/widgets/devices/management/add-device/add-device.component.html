@@ -1,0 +1,106 @@
+<p-dialog header="Type configuration" [modal]=true appendTo="body" [width]="700"
+          [(visible)]="displaySettings" [closable]="false">
+  <span>Please choose types for all sensors of the new device.</span>
+  <div class="ui-g">
+    <div class="ui-g-12 grid-elem">
+      <h3>Sensors</h3>
+    </div>
+    <div *ngFor="let sensor of sensors" class="ui-g-12 grid-elem">
+      <div class="ui-g-4 grid-elem">{{sensor.name}}:</div>
+      <p-dropdown appendTo="body" [options]="sensorTypes" optionLabel="name"
+                  [filter]="true" [(ngModel)]="sensor.type"
+                  [style]="{'min-width':'200px'}" placeholder="Select a type"
+                  (onClick)="$event.stopPropagation();$event.preventDefault();">
+      </p-dropdown>
+    </div>
+    <!--div class="ui-g-12 grid-elem">
+      <h3>Actuators</h3>
+    </div>
+    <div *ngFor="let actuator of actuators" class="ui-g-12 grid-elem">
+      <div class="ui-g-4 grid-elem">{{actuator.name}}:</div>
+      <p-dropdown appendTo="body" [options]="actuatorTypes" optionLabel="name"
+                  [filter]="true" [(ngModel)]="actuator.type"
+                  [style]="{'min-width':'200px'}" placeholder="Select a type" (onClick)="$event.stopPropagation();$event.preventDefault();">
+      </p-dropdown>
+    </div-->
+    <div class="ui-g-12" style="width:10px;"></div>
+  </div>
+  <p-footer>
+    <button type="button" pButton icon="fa-check" (click)="addTypesToDevice();" label="Apply"></button>
+  </p-footer>
+</p-dialog>
+<div style="display: flex; flex-direction:column; align-items:left; height:100%; width:100%;">
+  <div style="padding-top:15px;">
+    <p-dropdown appendTo="body" [options]="platforms" [filter]="true" [placeholder]="'Select a platform'"
+                [(ngModel)]="selectedPlatform" optionLabel="name"
+                [style]="{'width':'100%'}" (onChange)="updateAddingService()" (mousedown)="$event.stopPropagation()"
+                (touchstart)="$event.stopPropagation()" class="gridster-item-content">
+    </p-dropdown>
+  </div>
+  <div *ngIf="addingService == 1" style="padding-top:15px;">
+    <p-dropdown appendTo="body" [options]="devices" [filter]="true" optionLabel="name" [placeholder]="'Select a device'"
+                [(ngModel)]="selectedDevice" (onClick)="updateDevices()" [style]="{'width':'100%'}"
+                (mousedown)="$event.stopPropagation()"
+                (touchstart)="$event.stopPropagation()" class="gridster-item-content">
+    </p-dropdown>
+  </div>
+  <div *ngIf="addingService == 1 || addingService == 2" style="padding-top:15px;">
+    <input pInputText [(ngModel)]="name" style="width: 100%;" placeholder="Enter name"
+           (mousedown)="$event.stopPropagation()"
+           (touchstart)="$event.stopPropagation()" class="gridster-item-content">
+  </div>
+  <div *ngIf="addingService == 2" style="padding-top:15px;">
+    <input pInputText [(ngModel)]="externalDeviceId" style="width: 100%;" placeholder="Enter device id"
+           (mousedown)="$event.stopPropagation()"
+           (touchstart)="$event.stopPropagation()" class="gridster-item-content">
+  </div>
+  <!--<div style="padding-top:15px;">
+    <input pInputText [(ngModel)]="serial" style="width: 100%;" placeholder="Enter serialnumber"
+           (mousedown)="$event.stopPropagation()" (touchstart)="$event.stopPropagation()" class="gridster-item-content">
+  </div>-->
+  <div *ngIf="addingService == 1 || addingService == 2" style="padding-top:15px;">
+    <p-dropdown appendTo="body" [options]="locations" [filter]="true" optionLabel="name"
+                [placeholder]="'Select a location'"
+                [(ngModel)]="selectedLocation" [style]="{'width':'100%'}" (mousedown)="$event.stopPropagation()"
+                (touchstart)="$event.stopPropagation()" class="gridster-item-content">
+    </p-dropdown>
+    <!--p-dropdown [options]="locations" [(ngModel)]="selectedLocation" placeholder="Select a City" optionLabel="name" [showClear]="true"></p-dropdown-->
+  </div>
+  <div style="padding-top:15px; display: flex; flex-direction:row; align-items: center; width:100%;">
+    <div style="width: 50%;">
+      <button type="'button" pButton icon="fa-check" (click)="addDevice()" (mousedown)="$event.stopPropagation()"
+              style="float:right;" (touchstart)="$event.stopPropagation()" label="Add"
+              class="gridster-item-content"></button>
+    </div>
+
+    <div style="width: 50%;">
+      <button pButton icon="fa fa-undo" (mousedown)="$event.stopPropagation()" style="float:left;"
+              (touchstart)="$event.stopPropagation()" (click)="clear()" class="gridster-item-content"
+              label="Clear">
+      </button>
+    </div>
+
+  </div>
+
+  <div style="width: fit-content" class="ui-message ui-messages-success ui-corner-all"
+       *ngIf="isSuccess">
+    <span>Device was added.</span>
+  </div>
+  <div style="width: fit-content" class="ui-message ui-messages-error ui-corner-all"
+       *ngIf="isLocationFailed">
+    <span>Device was added, but sensors cannot be load.</span>
+  </div>
+  <div style="width: fit-content" class="ui-message ui-messages-success ui-corner-all"
+       *ngIf="isSensorUpdated">
+    <span>Sensor information was updated.</span>
+  </div>
+  <div style="width: fit-content" class="ui-message ui-messages-success ui-corner-all"
+       *ngIf="isSensorUpdatedFAILED">
+    <span>Sensor could not been updated. Please try again later.</span>
+  </div>
+  <div style="width: fit-content" class="ui-message ui-messages-error ui-corner-all"
+       *ngIf="isFail">
+    <span>Device could not been added. Please try again later.</span>
+  </div>
+
+</div>

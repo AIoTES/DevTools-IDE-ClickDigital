@@ -1,0 +1,35 @@
+.clickDigitalLogo {
+  width: 124px;
+  position:absolute;
+  left:7px;
+  top: 7px;
+}
+
+::ng-deep .ui-menubar {
+  padding-left: 148px;
+}
+
+::ng-deep .ui-menuitem {
+  white-space: nowrap;
+}
+
+
+.ui-menuitem-text {
+  color: #222222 !important;
+}
+
+.ui-menuitem-icon {
+  color: #222222 !important;
+}
+
+@media only screen and (min-width: 840px){
+  .verticalMenu {
+    display: none !important;
+  }
+}
+
+@media only screen and (max-width: 840px){
+  .horizontalMenu {
+    display: none !important;
+  }
+}

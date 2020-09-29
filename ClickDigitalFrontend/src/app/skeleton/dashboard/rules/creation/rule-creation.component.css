@@ -1,0 +1,60 @@
+.rule_creation {
+  background-color: #cccccc;
+}
+.description-border {
+  border-style: solid;
+  border-color: #00a6dd;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-width: 2px;
+}
+
+.rule_create_button {
+  width: 110px !important;
+}
+
+.rule_creation_padding {
+  padding-top: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.rule_name {
+  padding-left: 12px;
+}
+
+.activation {
+  padding-left: 20px !important;
+}
+.rule_creation_label{
+  margin-bottom: 10px;
+}
+.condition_action_title {
+  background-color: #eff1f4;
+  padding-left: 24px;
+
+}
+.conditions, .actions {
+  border: solid;
+  border-top: none;
+  border-bottom: none;
+  border-left: none;
+  border-color: #cccccc;
+}
+.operator-box {
+  padding: 5px;
+}
+
+.operator-plus-box{
+  padding: 5px;
+}
+.remove-button {
+  border-color: white !important;
+  float: right;
+  color: black;
+  background-color: transparent;
+}
+.last_distance {
+  padding-bottom: 70px;
+}

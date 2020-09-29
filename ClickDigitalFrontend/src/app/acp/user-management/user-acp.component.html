@@ -1,0 +1,197 @@
+<p-confirmDialog header="Confirmation" icon="fa fa-exclamation-triangle"></p-confirmDialog>
+<p-growl [value]="userMsgs" [sticky]="true"></p-growl>
+
+<div style="display: none" #overview>
+	<div *ngFor="let user of users; let i=index" id="{{user.userId}}">
+		<div class="vertical-align" *ngIf="user != null">
+			<p-fieldset [toggleable]="false" [collapsed]="false">
+				<p-header>
+					<div style="border: none; font-weight: bold; background-color: blue; color: white" class="ui-message">
+					  {{user.username}}
+					</div>
+				</p-header>
+				<table>
+					<tr>
+						<td style="font-weight: bold">ID</td>
+						<td>{{user.userId}}</td>
+					</tr>
+					<tr>
+						<td style="font-weight: bold">Creation date</td>
+						<td>---</td>
+					</tr>
+					<tr>
+						<td style="font-weight: bold">Role</td>
+						<td>{{user.role}}</td>
+					</tr>
+					<tr>
+						<td style="font-weight: bold">E-Mail</td>
+						<td>{{user.email}}</td>
+					</tr>
+					<tr>
+						<td style="font-weight: bold">First name</td>
+						<td>{{user.firstname}}</td>
+					</tr>
+					<tr>
+						<td style="font-weight: bold">Last name</td>
+						<td>{{user.lastname}}</td>
+					</tr>
+				</table>
+				<div class="ui-g-12">
+					<button pButton icon="fas fa-wrench" style="background-color: black; margin-right: 5px;" type="submit" label="CHANGE" (click)="prepareChangeArea(user.userId)"></button>
+					<button pButton icon="fa fa-refresh" style="background-color: green;" type="submit" label="RESET PASSWORD" (click)="prepareResetPasswordArea(user.userId)"></button>
+					<button pButton icon="fa fa-trash" style="background-color: red;" type="submit" label="REMOVE" (click)="prepareRemoveArea(user.userId)"></button>
+				</div>
+			</p-fieldset>
+		</div>
+	</div>	
+	<br/>
+	<br/>
+</div>
+
+<div style="display: none" #change>
+	<form [formGroup]="changeUserForm" *ngIf="changeUserForm != null" (ngSubmit)="checkUserChanges(changeUserForm.value)">
+		<p-fieldset [toggleable]="false">
+			<p-header>
+				<div style="border: none; font-weight: bold; background-color: blue; color: white;" class="ui-message">
+					<input type="text" pInputText formControlName="username" class="userHeaderInput">	
+					<div style="border: none; color: red; font-weight: bold;" class="ui-message" *ngIf="!changeUserForm.controls.username.valid&&changeUserForm.controls.username.dirty">
+						<i style="color: red" class="fa fa-exclamation-circle "></i> 
+					</div>
+				</div>	
+			</p-header>
+			<table>
+				<tr>
+					<td style="font-weight: bold">ID</td>
+					<td>
+						<input type="text" pInputText formControlName="id" class="userInput">
+					</td>
+				</tr>
+				<tr>
+					<td style="font-weight: bold">Role</td>
+					<td>
+						<p-dropdown placeholder="Select a role" [options]="role" formControlName="role" [autoWidth]="false"></p-dropdown>
+						<div style="border: none; color: red; font-weight: bold;" class="ui-message" *ngIf="!changeUserForm.controls.role.valid&&changeUserForm.controls.role.dirty">
+							<i style="color: red" class="fa fa-exclamation-circle"></i> invalid
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td style="font-weight: bold">E-Mail</td>
+					<td>
+						<input type="text" pInputText formControlName="email" class="userInput">
+						<div style="border: none; color: red; font-weight: bold;" class="ui-message" *ngIf="!changeUserForm.controls.email.valid&&changeUserForm.controls.email.dirty">
+							<i style="color: red" class="fa fa-exclamation-circle"></i> invalid
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td style="font-weight: bold">First name</td>
+					<td>
+						<input type="text" pInputText formControlName="firstname" class="userInput">
+						<div style="border: none; color: red; font-weight: bold;" class="ui-message" *ngIf="!changeUserForm.controls.firstname.valid&&changeUserForm.controls.firstname.dirty">
+							<i style="color: red" class="fa fa-exclamation-circle"></i> invalid
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td style="font-weight: bold">Last name</td>
+					<td>
+						<input type="text" pInputText formControlName="lastname" class="userInput">
+						<div style="border: none; color: red; font-weight: bold;" class="ui-message" *ngIf="!changeUserForm.controls.lastname.valid&&changeUserForm.controls.lastname.dirty">
+							<i style="color: red" class="fa fa-exclamation-circle"></i> invalid
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td style="font-weight: bold">Confirmed</td>
+					<td>
+						<p-checkbox binary="true" formControlName="confirmed" title="confirmed"></p-checkbox>
+						<div style="border: none; color: red; font-weight: bold;" class="ui-message" *ngIf="!changeUserForm.controls.confirmed.valid&&changeUserForm.controls.confirmed.dirty">
+							<i style="color: red" class="fa fa-exclamation-circle"></i> invalid
+						</div>
+					</td>
+				</tr>
+			</table>
+			<button pButton type="submit" style="margin-right: 5px;" label="Change User" [disabled]="!changeUserForm.valid"></button>
+			<button pButton type="button" label="Back" (click)="goBack()"></button>
+		</p-fieldset>
+	</form>
+</div>
+
+<div style="display: none" #add>
+	<form [formGroup]="addUserForm" *ngIf="addUserForm != null" (ngSubmit)="checkUserCreation(addUserForm.value)">
+		<p-fieldset [toggleable]="false">
+			<p-header>
+				<div style="border: none; font-weight: bold; background-color: blue; color: white;" class="ui-message">
+					ADD USER
+				</div>	
+			</p-header>
+			<table>
+				<tr>
+					<td style="font-weight: bold">Role</td>
+					<td>
+						<p-dropdown placeholder="Select a role" [options]="role" formControlName="role" [autoWidth]="false"></p-dropdown>
+						<div style="width: fit-content" class="ui-message ui-messages-error ui-corner-all" *ngIf="!addUserForm.controls.role.valid&&addUserForm.controls.role.dirty">
+						  invalid
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td style="font-weight: bold">Username</td>
+					<td>
+						<input type="text" pInputText formControlName="username" class="userInput">
+						<div style="width: fit-content" class="ui-message ui-messages-error ui-corner-all" *ngIf="!addUserForm.controls.username.valid&&addUserForm.controls.username.dirty">
+						  invalid
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td style="font-weight: bold">Password</td>
+					<td>
+						<input type="text" pInputText formControlName="password" class="userInput">
+						<div style="width: fit-content" class="ui-message ui-messages-error ui-corner-all" *ngIf="!addUserForm.controls.password.valid&&addUserForm.controls.password.dirty">
+						  invalid
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td style="font-weight: bold">E-Mail</td>
+					<td>
+						<input type="text" pInputText formControlName="email" class="userInput">
+						<div style="width: fit-content" class="ui-message ui-messages-error ui-corner-all" *ngIf="!addUserForm.controls.email.valid&&addUserForm.controls.email.dirty">
+						  invalid
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td style="font-weight: bold">First name</td>
+					<td>
+						<input type="text" pInputText formControlName="firstname" class="userInput">
+						<div style="width: fit-content" class="ui-message ui-messages-error ui-corner-all" *ngIf="!addUserForm.controls.firstname.valid&&addUserForm.controls.firstname.dirty">
+						  invalid
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td style="font-weight: bold">Last name</td>
+					<td>
+						<input type="text" pInputText formControlName="lastname" class="userInput">
+						<div style="width: fit-content" class="ui-message ui-messages-error ui-corner-all" *ngIf="!addUserForm.controls.lastname.valid&&addUserForm.controls.lastname.dirty">
+						  invalid
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td style="font-weight: bold">Confirmed</td>
+					<td>
+						<p-checkbox binary="true" formControlName="confirmed" title="confirmed"></p-checkbox>
+						<div style="width: fit-content" class="ui-message ui-messages-error ui-corner-all" *ngIf="!addUserForm.controls.confirmed.valid&&addUserForm.controls.confirmed.dirty">
+						  invalid
+						</div>
+					</td>
+				</tr>
+			</table>
+			<button pButton type="submit" style="margin-right: 5px;" label="Create User" [disabled]="!addUserForm.valid"></button>
+		</p-fieldset>
+	</form>
+</div>

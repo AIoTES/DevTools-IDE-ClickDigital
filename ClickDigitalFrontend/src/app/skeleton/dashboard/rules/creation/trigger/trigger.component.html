@@ -1,0 +1,96 @@
+<div style="font-size: 14px;">
+  <p-messages [(value)]="messeges" ></p-messages>
+</div>
+<div class="ui-g">
+  <div class="ui-g-4" style="margin-top: 13px">
+    <div *ngFor="let trigger of triggersFilterSchema.children; let filterIndex = index"><br *ngIf="filterIndex !== 0">
+      <i class="fa fa-{{trigger.icon}}" style="width:20px;vertical-align:middle"></i>
+      <p-checkbox name="name" value="{{trigger.name}}" label="{{trigger.name}}"
+                  [(ngModel)]="triggerCheckboxSelectedValues[trigger.id]"
+                  (click)="changeSelectedValues(triggerCheckboxSelectedValues)"></p-checkbox>
+    </div>
+  </div>
+  <div class="ui-g-8">
+    <div class="ui-g-12">
+    <p-autoComplete [(ngModel)]="filterValue" field="leafChild.name"
+                    [suggestions]="filterResultData | toItem" (completeMethod)="filterTrigger($event)"
+                    (onDropdownClick)="clearFilterValue();"
+                    (onSelect)="addFilteredValue(filterValue);"
+                    [size]="42"
+                    [minLength]="1" [dropdown]="true">
+      <ng-template let-trigger pTemplate="item">
+        <div class="ui-helper-clearfix" style="border-bottom:1px solid #D5D5D5">
+          <div style="font-size:16px;margin:10px 10px 0 0">
+            <i class="fa fa-{{trigger.first_parent_icon}}" style="width:20px;vertical-align:middle;"></i>
+            <span *ngIf="trigger.parents.length > 0">
+              <span *ngFor="let parent of trigger.parents">{{ parent.name }} - </span></span>
+            <span>{{ trigger.leafChild.name }}</span>
+          </div>
+        </div>
+      </ng-template>
+    </p-autoComplete>
+  </div>
+  <div class="ui-g-12">
+    <div *ngIf="filterValue.leafChild && filterValue.leafChild.name">
+      <p-autoComplete [(ngModel)]="selectedCondition"
+                      [suggestions]="filterValue.leafChild.properties"
+                      field="text"
+                      (completeMethod)="searchCondition($event)"
+                      [dropdown]="true"
+                      [size]="42"
+                      placeholder="Select Condition">
+      </p-autoComplete>
+    </div>
+  </div>
+  <div class="ui-g-12" *ngIf="selectedCondition.text">
+      <strong>{{ selectedCondition.text }}</strong>
+  </div>
+  <div class="ui-g-12" *ngIf="filterValue.leafChild">
+    <div *ngIf="selectedCondition.type_options === 'input'">
+      <input type="{{selectedCondition.type}}" pInputText [(ngModel)]="filterValue.leafChild.conditionValue"/>
+    </div>
+    <div *ngIf="selectedCondition.type_options === 'multiselect'">
+      <p-multiSelect [options]="selectedCondition.selects" [(ngModel)]="filterValue.leafChild.conditionValue" [filter]="false">
+      </p-multiSelect>
+    </div>
+    <div *ngIf="selectedCondition.type_options === 'inputSwitch'">
+      <p-inputSwitch [(ngModel)]="filterValue.leafChild.conditionValue" onLabel="Yes" offLabel="No"></p-inputSwitch>
+    </div>
+    <div *ngIf="selectedCondition.type_options === 'calendar'">
+      <p-calendar [(ngModel)]="filterValue.leafChild.conditionValue" dateFormat="dd.mm.yy"></p-calendar>
+    </div>
+    <div *ngIf="selectedCondition.type_options === 'time'">
+      <p-calendar [(ngModel)]="filterValue.leafChild.conditionValue" [timeOnly]="true"
+                  showTime="true"></p-calendar>
+    </div>
+    <div *ngIf="selectedCondition.type_options === 'dropdown'">
+      <p-dropdown [options]="selectedCondition.selects" placeholder="Select"
+                  [(ngModel)]="filterValue.leafChild.conditionValue"></p-dropdown>
+    </div>
+    <div style="padding-left:50px;">
+      <div *ngIf="selectedCondition.type_options === 'checkbox'">
+        <p-checkbox [(ngModel)]="filterValue.leafChild.conditionValue" binary="true"></p-checkbox>
+      </div>
+    </div>
+    <div *ngIf="selectedCondition.type_options === 'slider'">
+      <div class="ui-lg-5">
+        <span style="padding: 48%">{{ filterValue.leafChild.conditionValue }}</span>
+        <p-slider [(ngModel)]="filterValue.leafChild.conditionValue" [min]="selectedCondition.min"
+                  [max]="selectedCondition.max"></p-slider>
+      </div>
+    </div>
+  </div>
+    <div class="ui-g-12" *ngIf="filterValue.leafChild !== undefined && filterValue.leafChild.conditionValue !== undefined">
+      <div class="ui-g-12 ui-md-12 ui-lg-6 save_condition">
+        <button pButton *ngIf="trigger_function !== 'edit'" type="button" label="Save condition"
+                class="new_condition_button_size" (click)="saveNewTrigger(filterValue);"></button>
+        <button pButton *ngIf="trigger_function === 'edit'" type="button" label="Update condition"
+                class="new_condition_button_size" (click)="updateTrigger(filterValue)"></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+

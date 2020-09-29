@@ -1,0 +1,9 @@
+#siteContainer {
+  height: 100%;
+  width: 100%;
+  display: table-row;
+  background: white;
+}
+#menuContainer{
+  display: table-row;
+}

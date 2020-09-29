@@ -1,0 +1,186 @@
+<p-confirmDialog header="Confirmation" icon="fa fa-exclamation-triangle"></p-confirmDialog>
+<p-growl [value]="privacyMsgs" [sticky]="true"></p-growl>
+
+<div style="display: none" #overview>
+	<div style="font-size: 15px; color: white" *ngIf="sequenceList.length === 0">
+		empty
+	</div>
+	<div *ngFor="let currID of sequenceList; let i=index" id="{{currID}}">
+		<div class="vertical-align" *ngIf="availableElements[currID] != null">
+			<p-fieldset [toggleable]="false" [collapsed]="false">
+				<p-header>
+					<div style="border: none; font-weight: bold; background-color: black; color: white" class="ui-message">
+					  {{availableElements[currID].title}}
+					</div>
+				</p-header>
+				<div style="width: 650px;">
+					{{availableElements[currID].descriptions.before}}<hr/>
+					<div *ngIf="availableElements[currID].children.length == 0">
+						<i>empty</i>
+					</div>
+					<div *ngFor="let child of availableElements[currID].children; let i=index" id="{{child.id}}">
+						<p-fieldset *ngIf="availableElements[child.id] != null">
+							<p-header>
+								<div style="border: none; font-weight: bold;" class="ui-message">
+									{{availableElements[child.id].title}}
+								</div>
+							</p-header>
+							<div style="width: 600px;">
+								{{child.descriptions.before}}
+							</div>
+							<div class="ui-g-12">
+								<u>{{child.descriptions.submit}}</u><br/>
+								<div class="ui-g-8">
+									<button pButton icon="fas fa-wrench" style="background-color: blue; margin-right: 5px;" type="submit" label="CHANGE" (click)="prepareChangeArea(child.id)"></button>
+									<button pButton icon="fas fa-arrow-up" style="background-color: green; margin-right: 5px;" type="submit" label="EXPORT" (click)="prepareExportArea(child.id)"></button>
+									<button pButton icon="fa fa-trash" style="background-color: red;" type="submit" label="REMOVE" (click)="prepareRemoveArea(child.id)"></button>
+								</div>
+								<div class="ui-g-4" style="text-align: right; color: green; -ms-transform: translateY(25%); transform: translateY(25%);">
+									<span *ngIf="child.inUse">✔inUse </span>
+									<span *ngIf="child.consentRequired">✔consentRequired </span>
+									<span *ngIf="child.preChecked">✔preChecked </span>
+								</div>
+							</div>
+						</p-fieldset>			
+					</div>
+					<hr/>{{availableElements[currID].descriptions.after}}
+					<div class="ui-g-12">
+						<u>{{availableElements[currID].descriptions.submit}}</u><br/>
+						<div class="ui-g-8">
+							<button pButton icon="fas fa-wrench" style="background-color: blue; margin-right: 5px;" type="submit" label="CHANGE" (click)="prepareChangeArea(currID)"></button>
+							<button pButton icon="fas fa-arrow-up" style="background-color: green; margin-right: 5px;" type="submit" label="EXPORT" (click)="prepareExportArea(currID)"></button>
+							<button pButton icon="fa fa-trash" style="background-color: red;" type="submit" label="REMOVE" (click)="prepareRemoveArea(currID)"></button>
+						</div>
+						<div class="ui-g-4" style="text-align: right; color: green; -ms-transform: translateY(25%); transform: translateY(25%);">
+							<span *ngIf="availableElements[currID].inUse">✔inUse </span>
+							<span *ngIf="availableElements[currID].consentRequired">✔consentRequired</span>
+							<span *ngIf="availableElements[currID].preChecked">✔preChecked </span>
+						</div>
+					</div>
+				</div>
+			</p-fieldset>
+		</div>
+	</div>	
+	<br/>
+	<br/>
+</div>
+
+<div style="display: none; width: 500px" #add>
+	<form [formGroup]="addElementForm" *ngIf="addElementForm != null" (ngSubmit)="checkElementInsertion(addElementForm.value)">
+		<p-fieldset [toggleable]="false">
+			<p-header>
+				<div class="ui-g">
+					<div class="ui-g-2">
+						<button pButton type="button" icon="fas fa-plus" style="background-color: green; width: 50px; height: 65px; margin-top: 25px;"></button>
+					</div>
+					<div class="ui-g-1" style="width: 250px; text-align: right; color: green; -ms-transform: translateY(25%); transform: translateY(25%);">
+						<input type="text" pInputText formControlName="id" placeholder="id" class="policyInput">
+						<input type="text" pInputText formControlName="contextID" placeholder="contextID" class="policyInput">
+						<input type="text" pInputText formControlName="priorVersion" placeholder="priorVersion" class="policyInput">
+						<input type="text" pInputText formControlName="title" placeholder="title" class="policyInput">	
+					</div>
+				</div>
+			</p-header>
+			<div style="width: 400px;">
+				<textarea style="width: 100%; height: 100px;" type="text" InputTextareaModule formControlName="descriptionsBefore" placeholder="descriptions.before"></textarea>
+				<br/><hr/>
+				<b>sub-elements</b>
+				<hr/>
+				<textarea style="width: 100%; height: 100px;" type="text" InputTextareaModule formControlName="descriptionsAfter" placeholder="descriptions.after"></textarea>
+				<p-calendar showTime="true" hourFormat="24"  formControlName="validFrom" placeholder="validFrom"></p-calendar>
+				<div class="ui-g-25">
+				    <p-checkbox binary="true" formControlName="inUse" title="inUse"></p-checkbox>
+					<p-checkbox binary="true" formControlName="consentRequired" title="consentRequired"></p-checkbox>
+					<p-checkbox binary="true" formControlName="preChecked" title="preChecked"></p-checkbox>
+					<input style="width: 100%" type="text" pInputText formControlName="descriptionsSubmit" placeholder="descriptions.submit">
+				</div>
+				<br/>
+				<button pButton type="submit" style="margin-right: 5px;" label="Add Element"></button>
+			</div>
+		</p-fieldset>
+	</form>
+	<br/>
+</div>
+
+<div style="display: none" #export>
+	<form [formGroup]="exportElementForm" *ngIf="exportElementForm != null" (ngSubmit)="checkBackupElementInsertion(exportElementForm.value)">
+		<p-selectButton formControlName="selectedTab" [options]="exportTabOptions"></p-selectButton>
+		<div style="" *ngIf="exportElementForm.controls.selectedTab.value === 'db'">
+			<p-listbox formControlName="selectedBackupElement" [options]="exportTabEntries"></p-listbox>
+		</div>
+		<div *ngIf="exportElementForm.controls.selectedTab.value === 'tf'">
+			<textarea type="text" InputTextareaModule formControlName="backupContent"></textarea><br/>
+			<input type="hidden" pInputText formControlName="backupID">
+			<input type="text" pInputText formControlName="backupName" placeholder="enter name for saving backup">
+			<div style="color: black; font-weight: bold;">
+				<button *ngIf="this.exportElementForm.value.backupID === ''" pButton style="background-color: green; margin-right: 5px;" type="submit" label="CREATE BACKUP" [disabled]="!exportElementForm.valid"></button>
+				<button *ngIf="this.exportElementForm.value.backupID !== ''" pButton style="background-color: blue; margin-right: 5px;" type="submit" label="CHANGE BACKUP" [disabled]="!exportElementForm.valid"></button>
+				<button *ngIf="this.exportElementForm.value.backupID !== ''" pButton style="background-color: green; margin-right: 5px;" type="button" label="CREATE COPY" (click)="createBackupCopy(this.exportElementForm.value.backupID)"></button>
+				<button *ngIf="this.exportElementForm.value.backupID !== ''" pButton style="background-color: red" type="button" label="REMOVE BACKUP" (click)="removeBackupElement(this.exportElementForm.value.backupID)"></button>
+			</div>
+		</div>
+		<br/>
+	</form>
+</div>
+
+
+<div style="display: none" #import>
+	<form [formGroup]="importElementForm" *ngIf="importElementForm != null" (ngSubmit)="checkImportElementInsertion(importElementForm.value)">
+		<p-listbox formControlName="selectedBackupElement" [options]="importTabEntries"></p-listbox>
+		<div style="color: black; font-weight: bold;">
+			<p-fieldset [toggleable]="false" [collapsed]="false">
+				<p-header>
+					<div style="border: none; font-weight: bold; background-color: blue; color: white">
+						MODES
+					</div>
+				</p-header>
+				<p-radioButton formControlName="mode" name="mode" label="DEFAULT" value="default"></p-radioButton><br/>
+				<p-radioButton formControlName="mode" name="mode" label="OVERRIDE" value="override"></p-radioButton><br/>
+				<p-radioButton formControlName="mode" name="mode" label="ONLY" value="only"></p-radioButton>
+			</p-fieldset>
+			<button pButton style="background-color: red" type="submit" label="LOAD BACKUP" [disabled]="importElementForm.value.selectedBackupElement === ''"></button>
+		</div>
+	</form>
+</div>
+
+<div style="display: none" #settings>
+	d
+</div>
+
+<div style="display: none; width: 500px" #change>
+	<form [formGroup]="changeElementForm" *ngIf="changeElementForm != null" (ngSubmit)="checkElementChanges(changeElementForm.value)">
+		<p-fieldset [toggleable]="false">
+			<p-header>
+				<div class="ui-g">
+					<div class="ui-g-2">
+						<button pButton type="button" icon="fas fa-wrench" style="background-color: blue; width: 50px; height: 65px; margin-top: 25px;"></button>
+					</div>
+					<div class="ui-g-1" style="width: 250px; text-align: right; color: green; -ms-transform: translateY(25%); transform: translateY(25%);">
+						<input type="hidden" pInputText formControlName="_id">
+						<input type="text" pInputText formControlName="id" placeholder="id" class="policyInput">
+						<input type="text" pInputText formControlName="contextID" placeholder="contextID" class="policyInput">
+						<input type="text" pInputText formControlName="priorVersion" placeholder="priorVersion" class="policyInput">
+						<input type="text" pInputText formControlName="title" placeholder="title" class="policyInput">	
+					</div>
+				</div>
+			</p-header>
+			<div style="width: 400px;">
+				<textarea style="width: 100%; height: 100px;" type="text" InputTextareaModule formControlName="descriptionsBefore" placeholder="descriptions.before"></textarea>
+				<br/><hr/>
+				<b>sub-elements</b>
+				<hr/>
+				<textarea style="width: 100%; height: 100px;" type="text" InputTextareaModule formControlName="descriptionsAfter" placeholder="descriptions.after"></textarea>
+				<p-calendar showTime="true" hourFormat="24"  formControlName="validFrom" placeholder="validFrom"></p-calendar>
+				<div class="ui-g-25">
+				    <p-checkbox binary="true" formControlName="inUse" title="inUse"></p-checkbox>
+					<p-checkbox binary="true" formControlName="consentRequired" title="consentRequired"></p-checkbox>
+					<p-checkbox binary="true" formControlName="preChecked" title="preChecked"></p-checkbox>
+					<input style="width: 100%" type="text" pInputText formControlName="descriptionsSubmit" placeholder="descriptions.submit">
+				</div>
+				<br/>
+				<button pButton type="submit" style="margin-right: 5px;" label="Change Element"></button>
+				<button pButton type="button" label="Back" (click)="goBack()"></button>
+			</div>
+		</p-fieldset>
+	</form>
+</div>

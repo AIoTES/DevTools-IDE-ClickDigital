@@ -1,0 +1,77 @@
+<p-confirmDialog appendTo="body" key="rulemanagement"></p-confirmDialog>
+
+<p-dataView #dv [value]="rules" [paginator]="true" [rows]="4" paginatorPosition="bottom" filterBy="name"
+            [sortField]="sortField" [sortOrder]="sortOrder"  >
+  <p-header>
+    <div class="ui-helper-clearfix">
+      <div class="ui-g">
+        <div class="ui-g-6 ui-md-4">
+          <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By"
+                      (onChange)="onSortChange($event)" [autoWidth]="false" [style]="{'min-width':'15em'}" class="gridster-item-content"></p-dropdown>
+        </div>
+        <div class="ui-g-6 ui-md-8" style="text-align:right">
+          <input type="search" pInputText placeholder="Search by name" (keyup)="dv.filter($event.target.value)" class="gridster-item-content">
+          <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+        </div>
+      </div>
+    </div>
+  </p-header>
+  <ng-template let-rule pTemplate="listItem">
+    <div class="ui-g" style="padding: 0.2em;border-bottom: 1px solid #d9d9d9;background: #eff1f4;border :  none;">
+      <div class="ui-g-1 ui-md-1" style="margin:5px;">
+        <button pButton type="button"  icon="fa {{rule.active ? 'fa-check' : 'fa-power-off'}}" (click)="activateRuleManagement(rule)"
+                class="gridster-item-content ui-button-rounded " [ngClass]="{ 'ui-button-secondary' : !rule.active}"></button>
+      </div>
+      <div class="ui-g-8 ui-md-8">
+        <div class="ui-g">
+          <div class="accordion-container">
+            <p-accordion [style]="{width : '100%', border : 'none'}" styleClass="myaccordionclass">
+            <p-accordionTab >
+              <p-header [style]="{border : 'none'}" class="gridster-item-content">
+                <strong>Name: </strong>{{ rule.name }}
+              </p-header>
+              <div class="ui-g-12 ui-sm-12"><strong>Description : </strong> {{ rule.description }}</div>
+              <div class="ui-g-12 ui-sm-12" ><strong>Platform : </strong>
+                <span *ngIf="indexedPlatforms[rule.platformID]">{{ indexedPlatforms[rule.platformID].name }}</span>
+              </div>
+              <div class="ui-g-12 ui-sm-12" ><strong>Project : </strong>
+                <span *ngIf="indexedProjects[rule.projectID]">{{ indexedProjects[rule.projectID].name }}</span>
+              </div>
+              <div class="ui-g-12 ui-sm-12"><strong>Rule logic : </strong>
+                <span *ngIf="indexedTriggers[rule.rootTGID]">
+                  <div>{{ indexedTriggers[rule.rootTGID].name }}</div>
+                  <div><span style="color: blue">Then</span>
+                    <span *ngFor="let action of rule.ruleActions; let actionIndex = index">
+                   {{ action.name }} <span *ngIf="actionIndex != rule.ruleActions.length - 1">AND</span>
+                    </span>
+                  </div>
+                </span>
+              </div>
+          </p-accordionTab>
+          </p-accordion>
+        </div>
+        </div>
+      </div>
+      <div class="ui-g-1 ui-md-1" style="margin: 5px" >
+        <button pButton type="button" icon="fa fa-edit" class="gridster-item-content editRuleButton" (click)="editRule(rule)"></button>
+      </div>
+      <div class="ui-g-1 ui-md-1" style="margin: 5px">
+        <button pButton type="button" icon="fa fa-trash" class="gridster-item-content ui-button-danger " (click)="confirmRuleDelete(rule)"></button>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template let-rule pTemplate="gridItem">
+    <div style="padding:.5em" class="ui-g-12 ui-md-3">
+      <p-panel [header]="rule.name" [style]="{'text-align':'center'}" >
+        <div class="rule-detail" >{{ rule.name }} - {{ rule.description }}</div>
+        <br>
+        <div class="rule-detail">{{ indexedPlatforms[rule.platformID].name }} - {{ indexedProjects[rule.projectID].name }}</div>
+        <hr class="ui-widget-content" style="border-top:0">
+        <button pButton type="button"  icon="fa {{rule.active ? 'fa-check' : 'fa-power-off'}}" (click)="activateRuleManagement(rule)"
+                class="gridster-item-content ui-button-rounded " [ngClass]="{ 'ui-button-secondary' : !rule.active}"></button>
+        <button pButton type="button" icon="fa fa-edit" (click)="editRule(rule)" class="gridster-item-content"></button>
+        <button pButton type="button" icon="fa fa-trash" class="gridster-item-content ui-button-danger" (click)="confirmRuleDelete(rule)"></button>
+      </p-panel>
+    </div>
+  </ng-template>
+</p-dataView>

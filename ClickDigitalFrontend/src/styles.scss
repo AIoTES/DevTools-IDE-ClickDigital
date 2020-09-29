@@ -1,0 +1,46 @@
+@import '~@angular/material/theming';
+@import './Themes/mixin.scss';
+@import "~ng-pick-datetime/assets/style/picker.min.css";
+
+
+// always include only once per project
+@include mat-core();
+
+@import 'styles.css';
+
+// import our custom theme
+@import 'Themes/theme1';
+@import 'Themes/theme2';
+@import 'Themes/theme3';
+@import 'Themes/theme4';
+
+// specify theme class eg: <body class="my-theme"> ... </body>
+.indigo {
+  // use our theme with angular-material-theme mixin
+  @include angular-material-theme($indigo);
+  @include custom-material($indigo);
+  margin: 0px;
+}
+
+.red {
+  @include angular-material-theme($red);
+  @include custom-material($red);
+}
+
+.green {
+  @include angular-material-theme($green);
+  @include custom-material($green);
+}
+
+.grey-white {
+  @include angular-material-theme($grey-white);
+  @include custom-material($grey-white);
+}
+.lightness {
+
+}
+
+.ui-accordion .ui-accordion-header a { text-decoration : none !important; }
+a:-webkit-any-link {
+  text-decoration : none;
+}

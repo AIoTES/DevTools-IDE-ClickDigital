@@ -1,0 +1,99 @@
+/* You can find the definition of class widget-design in "Themes/mixin.scss */
+/*@import '/ClickDigitalFrontend/src/assets/resources/themes/_theme.scss';*/
+
+.widget-container {
+  height: 100%;
+  width: 100%;
+  background-color: white;
+
+}
+
+.widget-content {
+  padding: 10px 0px 10px 0px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.ui-card-body {
+  height: 100%;
+  width: 100%;
+}
+
+.ui-card-content {
+  height: 100%;
+  width: 100%;
+}
+
+.delete-button {
+  transition: all 0.5s;
+  position: absolute;
+  right: 40px;
+  top: 5px;
+}
+
+.delete-button:hover {
+  background-image: none;
+}
+
+.dev-button {
+  transition: all 0.5s;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
+
+.dev-button:hover {
+  background-image: none;
+}
+
+.change-name {
+  width: 80%;
+  top: 0;
+}
+
+.tbutton {
+  border: none !important;
+}
+
+
+.transparentButton {
+  background-color: transparent !important;
+}
+
+.widget-design {
+  /*width: -moz-fit-content;
+  width: fit-content;
+  height: fit-content;*/
+ /* background-color: $contentBgColor;*/
+  /*border-color: #303f9f;*/
+  /*background-color: transparent;*/
+  width: 100% !important;
+  height: 100% !important;
+
+  /*overflow: hidden;*/
+  -o-object-fit: none;
+  object-fit: none;
+  border-radius: 2px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.gridster-design{
+  overflow: visible;
+  pointerEvents: 'auto';
+}
+
+.ui-card {
+  height: 100%;
+  width: 100%;
+}
+::ng-deep .ui-dropdown-filter-container {
+  width: 95% !important;
+}
+
+[hidden] {
+  display: none;
+}
