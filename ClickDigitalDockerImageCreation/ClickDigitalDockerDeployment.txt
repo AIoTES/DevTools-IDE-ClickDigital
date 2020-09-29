@@ -4,8 +4,6 @@ Run ClickDigital with Docker Image
     Create a new folder. Open a terminal and browse to that folder.
     Then login into docker repository by entering this terminal command: 
         "docker login  docker-activage.satrd.es"
-        Username: activage
-        Password: docker.activage
     Download the file "docker-compose.yml" from: 
 	https://git.activageproject.eu/Development/IDE-ClickDigital.git
 	Save the docker compose file "docker-compose.yml" in the folder you have created.
