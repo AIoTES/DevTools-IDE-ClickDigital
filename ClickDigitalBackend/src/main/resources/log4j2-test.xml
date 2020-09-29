@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+        </Console>
+        <File name="MyFile" fileName="./logs/ClickDigitalBackend.log" immediateFlush="true" append="false">
+            <PatternLayout pattern="%d{yyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </File>
+
+        <RollingFile name="RollingFile" fileName="logs/current.log"
+                     filePattern="logs/%d{yyyy-MM-dd-HH}" append="true">
+            <PatternLayout>
+                <Pattern>%d{ISO8601}%d{XXX} %p %c{1} - %m%n</Pattern>
+            </PatternLayout>
+            <DefaultRolloverStrategy>
+                <Delete basePath="logs/" maxDepth="1">
+                    <IfLastModified age="365d" />
+                </Delete>
+            </DefaultRolloverStrategy>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+
+    </Appenders>
+
+
+    <Loggers>
+        <Root level="trace">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="MyFile"/>
+            <AppenderRef ref="RollingFile"/>
+        </Root>
+    </Loggers>
+</Configuration>
